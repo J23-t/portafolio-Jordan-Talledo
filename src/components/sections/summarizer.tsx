@@ -35,6 +35,7 @@ export function Summarizer() {
   const [conversation, setConversation] = useState<ChatMessage[]>([]);
   const [displayConversation, setDisplayConversation] = useState<DisplayMessage[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isInitiated, setIsInitiated] = useState(false);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
 
   const FormSchema = z.object({
@@ -45,6 +46,33 @@ export function Summarizer() {
     resolver: zodResolver(FormSchema),
     defaultValues: { prompt: "" },
   });
+
+  useEffect(() => {
+    const initiateConversation = async () => {
+        if (!isInitiated) {
+            setIsLoading(true);
+            setIsInitiated(true);
+            try {
+                const result: ProjectConsultantOutput = await projectConsultant({ history: [] });
+                const assistantMessage: ChatMessage = { role: 'model', parts: [{ text: result.reply }] };
+                setConversation(prev => [...prev, assistantMessage]);
+                setDisplayConversation(prev => [...prev, { role: 'assistant', content: result.reply }]);
+            } catch (error) {
+                console.error(error);
+                toast({
+                    title: t.summarizer.error.title,
+                    description: t.summarizer.error.description,
+                    variant: "destructive",
+                });
+            } finally {
+                setIsLoading(false);
+            }
+        }
+    };
+
+    initiateConversation();
+  }, [isInitiated, t.summarizer.error, toast]);
+
 
   useEffect(() => {
     if (scrollAreaRef.current) {
@@ -122,7 +150,7 @@ export function Summarizer() {
             <CardContent>
                 <ScrollArea className="h-96 pr-4" ref={scrollAreaRef}>
                     <div className="space-y-6">
-                        {displayConversation.length === 0 ? (
+                        {displayConversation.length === 0 && !isLoading ? (
                             <div className="flex flex-col items-center justify-center h-full text-center text-muted-foreground pt-12">
                                 <Bot className="h-12 w-12 mb-4" />
                                 <p>{t.summarizer.output.placeholder}</p>
