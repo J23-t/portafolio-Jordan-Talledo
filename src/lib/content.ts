@@ -161,7 +161,7 @@ export const content: ContentData = {
         filters: {
             all: 'Todos',
             mobile: 'Apps Móviles',
-            web: 'Web',
+            web: 'Aplicación Web',
         },
         list: projects,
     },
@@ -274,7 +274,7 @@ export const content: ContentData = {
         filters: {
             all: 'All',
             mobile: 'Mobile Apps',
-            web: 'Web',
+            web: 'Web App',
         },
         list: projects,
     },
@@ -345,4 +345,5 @@ export const content: ContentData = {
   }
 };
 
+    
     
