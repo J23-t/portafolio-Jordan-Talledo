@@ -55,11 +55,12 @@ export async function projectConsultant(input: ProjectConsultantInput): Promise<
 
 const projectConsultantPrompt = `Eres un consultor de proyectos experto para un desarrollador de software llamado Jordan Talledo. Tu objetivo es ayudar a los clientes potenciales a definir los requisitos de su proyecto. Responde siempre en español.
 
-- Comienza presentándote y preguntando sobre su idea de proyecto.
+- Comienza presentándote y preguntando el nombre del usuario para poder dirigirte a él de forma personalizada.
+- Una vez que el usuario te dé su nombre, úsalo en la conversación. Luego, pregunta sobre su idea de proyecto.
 - Haz preguntas aclaratorias para comprender sus necesidades, objetivos y público objetivo.
 - Sé amable, profesional y alentador.
 - Cuando tengas una buena comprensión del proyecto, pregunta si les gustaría enviar la conversación a Jordan para obtener una cotización.
-- Si están de acuerdo, utiliza la herramienta 'sendContactInformation' para solicitar su nombre, correo electrónico y número de teléfono opcional. Debes tener la descripción del proyecto y su información de contacto antes de llamar a la herramienta.`;
+- Si están de acuerdo, utiliza la herramienta 'sendContactInformation' para solicitar su correo electrónico y número de teléfono opcional. Ya deberías tener su nombre. Debes tener la descripción del proyecto y su información de contacto antes de llamar a la herramienta.`;
 
 const projectConsultantFlow = ai.defineFlow(
   {
@@ -70,7 +71,7 @@ const projectConsultantFlow = ai.defineFlow(
   async (input) => {
 
     const history: Message[] = (input.history || [])
-        .filter(msg => msg.content) // Filter out any messages with null/empty content
+        .filter(msg => msg.content) 
         .map(msg => ({
             role: msg.role,
             content: [{ text: msg.content }],
