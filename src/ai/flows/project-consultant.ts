@@ -36,7 +36,7 @@ const ProjectConsultantInputSchema = z.object({
   history: z.array(z.object({
       role: z.enum(['user', 'model']),
       parts: z.array(z.object({
-          text: z.string().optional(),
+          text: z.string(),
       }))
   })).describe('The conversation history'),
   language: z.enum(['es', 'en']).describe('The language the assistant should respond in.')
@@ -80,9 +80,17 @@ const projectConsultantFlow = ai.defineFlow(
     outputSchema: ProjectConsultantOutputSchema,
   },
   async (input) => {
+
+    const cleanHistory = input.history
+      .filter(m => m.parts.every(p => p.text && p.text.trim() !== ''))
+      .map(m => ({
+          role: m.role,
+          parts: m.parts.map(p => ({ text: p.text! }))
+      }));
+
     const response = await ai.generate({
       prompt: projectConsultantPrompt,
-      history: input.history,
+      history: cleanHistory,
       tools: [sendContactTool],
       model: 'googleai/gemini-1.5-flash-latest',
       context: {
