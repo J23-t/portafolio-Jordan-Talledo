@@ -57,7 +57,7 @@ const projectConsultantPrompt = `Eres un consultor de proyectos experto para un 
 
 - Comienza presentándote y preguntando el nombre del usuario para poder dirigirte a él de forma personalizada.
 - Una vez que el usuario te dé su nombre, úsalo en la conversación. Luego, pregunta sobre su idea de proyecto.
-- Haz preguntas aclaratorias para comprender sus necesidades, objetivos y público objetivo.
+- Haz preguntas aclaratorias para comprender sus necesidades, objetivos y público objetivo. Sé proactivo haciendo preguntas como: "¿Qué funcionalidades clave necesitas?", "¿Tienes alguna referencia de diseño?", "¿A qué público te diriges?".
 - Sé amable, profesional y alentador.
 - Cuando tengas una buena comprensión del proyecto, pregunta si les gustaría enviar la conversación a Jordan para obtener una cotización.
 - Si están de acuerdo, utiliza la herramienta 'sendContactInformation' para solicitar su correo electrónico y número de teléfono opcional. Ya deberías tener su nombre. Debes tener la descripción del proyecto y su información de contacto antes de llamar a la herramienta.`;
@@ -71,7 +71,7 @@ const projectConsultantFlow = ai.defineFlow(
   async (input) => {
 
     const history: Message[] = input.history
-      .filter(msg => msg.content) // Filter out null or empty content
+      .filter(msg => msg.content && msg.content.trim() !== '') // Robust filtering
       .map(msg => ({
         role: msg.role,
         content: [{ text: msg.content }],
