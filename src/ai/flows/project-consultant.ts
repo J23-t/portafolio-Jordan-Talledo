@@ -100,8 +100,11 @@ const projectConsultantFlow = ai.defineFlow(
     outputSchema: ProjectConsultantOutputSchema,
   },
   async input => {
-    const response = await projectConsultantPrompt.generate({
+    const response = await ai.generate({
+        prompt: projectConsultantPrompt.prompt,
         history: input.history,
+        tools: [sendContactTool],
+        model: 'googleai/gemini-1.5-flash-latest'
     });
     
     const toolRequests = response.toolRequests();
