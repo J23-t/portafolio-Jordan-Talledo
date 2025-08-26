@@ -132,6 +132,7 @@ export const skills: Skill[] = [
 
 export const projects: Project[] = [
     {
+      slug: 'amoblarq',
       title: 'Amoblarq',
       description_es: 'Página web para una empresa de mueblería, con un catálogo de productos y funcionalidades de comercio electrónico.',
       description_en: 'Website for a furniture company, with a product catalog and e-commerce functionalities.',
@@ -141,6 +142,7 @@ export const projects: Project[] = [
       category: 'web',
     },
     {
+      slug: 'ferrefast',
       title: 'Ferrefast',
       description_es: 'Página web para una ferretería, incluyendo un catálogo de productos y sistema para realizar cotizaciones.',
       description_en: 'Website for a hardware store, including a product catalog and a system for generating quotes.',
@@ -150,6 +152,7 @@ export const projects: Project[] = [
       category: 'web',
     },
     {
+      slug: 'asistencialoficial',
       title: 'Asistencialoficial',
       description_es: 'Aplicación web diseñada para controlar y verificar la asistencia de los trabajadores de una empresa.',
       description_en: 'Web application designed to control and verify the attendance of a company\'s employees.',
@@ -159,6 +162,7 @@ export const projects: Project[] = [
       category: 'web',
     },
     {
+        slug: 'extractor-de-datos-iq',
         title: 'Extractor de Datos IQ',
         description_es: 'Herramienta que extrae datos de productos desde sitios web seleccionados por el cliente para un catálogo.',
         description_en: 'A tool that extracts product data from websites selected by the client for a catalog.',

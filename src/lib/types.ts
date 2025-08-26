@@ -14,6 +14,7 @@ export interface Service {
 }
 
 export interface Project {
+    slug: string;
     title: string;
     description_es: string;
     description_en: string;
