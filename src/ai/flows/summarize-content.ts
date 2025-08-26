@@ -1,9 +1,9 @@
 'use server';
 
 /**
- * @fileOverview AI-powered code analysis flow.
+ * @fileOverview AI-powered content summarization flow.
  *
- * - summarizeContent - A function that analyzes code and suggests improvements.
+ * - summarizeContent - A function that summarizes a given text.
  * - SummarizeContentInput - The input type for the summarizeContent function.
  * - SummarizeContentOutput - The return type for the summarizeContent function.
  */
@@ -12,12 +12,12 @@ import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 
 const SummarizeContentInputSchema = z.object({
-  content: z.string().describe('The code snippet to analyze'),
+  content: z.string().describe('The text content to summarize'),
 });
 export type SummarizeContentInput = z.infer<typeof SummarizeContentInputSchema>;
 
 const SummarizeContentOutputSchema = z.object({
-  summary: z.string().describe('An explanation of the code and suggestions for optimization.'),
+  summary: z.string().describe('A concise summary of the provided text, highlighting the key points.'),
 });
 export type SummarizeContentOutput = z.infer<typeof SummarizeContentOutputSchema>;
 
@@ -29,15 +29,15 @@ const summarizeContentPrompt = ai.definePrompt({
   name: 'summarizeContentPrompt',
   input: {schema: SummarizeContentInputSchema},
   output: {schema: SummarizeContentOutputSchema},
-  prompt: `You are an expert software developer and AI assistant. Your task is to analyze a code snippet, explain its functionality, and provide suggestions for improvement or optimization.
+  prompt: `You are an expert AI assistant specialized in summarizing text. Your task is to analyze the given content and provide a concise, easy-to-read summary that captures the main ideas and key points.
 
-Analyze the following code snippet:
+Summarize the following content:
 
-\`\`\`
+---
 {{{content}}}
-\`\`\`
+---
 
-Provide a clear explanation of what the code does, and then offer specific, actionable suggestions for how it could be improved (e.g., performance, readability, best practices).`,
+Provide a clear and well-structured summary of the text.`,
 });
 
 const summarizeContentFlow = ai.defineFlow(
