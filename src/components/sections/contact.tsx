@@ -76,7 +76,7 @@ export function Contact({ setIsFormFocused }: ContactProps) {
     navigator.clipboard.writeText(textToCopy);
     setCopied(type);
     setTimeout(() => setCopied(''), 2000);
-  }
+  };
 
   return (
     <section id="contact" className="py-16 md:py-24 bg-background">
