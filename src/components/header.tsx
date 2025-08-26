@@ -6,7 +6,7 @@ import { useLanguage } from '@/contexts/language-context';
 import { LanguageSwitcher } from './language-switcher';
 import { Button } from './ui/button';
 import { Menu, X, Code } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { ThemeSwitcher } from './theme-switcher';
 
 export function Header() {
   const { t } = useLanguage();
@@ -36,6 +36,7 @@ export function Header() {
         </nav>
         <div className="hidden md:flex items-center gap-2">
            <LanguageSwitcher />
+           <ThemeSwitcher />
         </div>
         <div className="md:hidden">
           <Button variant="ghost" size="icon" onClick={() => setIsMenuOpen(!isMenuOpen)}>
@@ -52,8 +53,9 @@ export function Header() {
                 {link.label}
               </Link>
             ))}
-            <div className="mt-4">
+            <div className="flex items-center gap-4 mt-4">
               <LanguageSwitcher />
+              <ThemeSwitcher />
             </div>
           </nav>
         </div>
