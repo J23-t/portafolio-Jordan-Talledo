@@ -1,17 +1,30 @@
+
 "use client";
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useLanguage } from '@/contexts/language-context';
 import { ProjectCard } from '../project-card';
 import { Button } from '../ui/button';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
 import type { Project } from '@/lib/types';
 import { cn } from '@/lib/utils';
+import * as React from 'react';
 
 type Filter = 'all' | 'mobile' | 'web';
 
 export function Projects() {
   const { t } = useLanguage();
   const [filter, setFilter] = useState<Filter>('all');
+  const plugin = React.useRef(
+    Autoplay({ delay: 4000, stopOnInteraction: true })
+  );
 
   const filteredProjects = t.projects.list.filter((project: Project) => {
     if (filter === 'all') return true;
@@ -46,11 +59,33 @@ export function Projects() {
             </Button>
           ))}
         </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredProjects.map((project: Project, index: number) => (
-            <ProjectCard key={index} project={project} />
-          ))}
-        </div>
+        <Carousel
+          plugins={[plugin.current]}
+          opts={{
+            align: "start",
+            loop: true,
+             slidesPerView: 1,
+            breakpoints: {
+                '(min-width: 640px)': { slidesPerView: 2 },
+                '(min-width: 1024px)': { slidesPerView: 3 },
+            },
+          }}
+          className="w-full max-w-6xl mx-auto"
+          onMouseEnter={plugin.current.stop}
+          onMouseLeave={plugin.current.reset}
+        >
+          <CarouselContent>
+            {filteredProjects.map((project: Project, index: number) => (
+              <CarouselItem key={index}>
+                <div className="p-1 h-full">
+                    <ProjectCard project={project} />
+                </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+           <CarouselPrevious className="hidden md:flex" />
+          <CarouselNext className="hidden md:flex" />
+        </Carousel>
       </div>
     </section>
   );

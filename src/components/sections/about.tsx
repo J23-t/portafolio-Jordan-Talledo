@@ -21,11 +21,23 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import {
+    Carousel,
+    CarouselContent,
+    CarouselItem,
+    CarouselNext,
+    CarouselPrevious,
+} from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
 import type { Project, Skill } from '@/lib/types';
 
 export function About() {
   const { t, language } = useLanguage();
   
+  const skillsPlugin = React.useRef(
+    Autoplay({ delay: 2000, stopOnInteraction: true })
+  );
+
   return (
     <section id="about" className="py-16 md:py-24 bg-secondary">
       <div className="container mx-auto px-4 md:px-6">
@@ -54,66 +66,89 @@ export function About() {
         </div>
         <div className="mt-16">
             <h3 className="font-headline text-2xl md:text-3xl font-bold text-center mb-8">{t.about.skills.title}</h3>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-                {t.about.skills.list.map((skill: Skill) => {
-                  const projectsWithSkill = t.projects.list.filter((project: Project) => 
-                    project.technologies.includes(skill.name)
-                  );
-                  const skillDescription = language === 'es' ? skill.description_es : skill.description_en;
+            <Carousel
+                plugins={[skillsPlugin.current]}
+                opts={{
+                    align: "start",
+                    loop: true,
+                    slidesPerView: 2,
+                    breakpoints: {
+                        '(min-width: 640px)': { slidesPerView: 3 },
+                        '(min-width: 768px)': { slidesPerView: 4 },
+                        '(min-width: 1024px)': { slidesPerView: 6 },
+                    },
+                }}
+                className="w-full"
+                onMouseEnter={skillsPlugin.current.stop}
+                onMouseLeave={skillsPlugin.current.reset}
+                >
+                <CarouselContent>
+                    {t.about.skills.list.map((skill: Skill) => {
+                    const projectsWithSkill = t.projects.list.filter((project: Project) => 
+                        project.technologies.includes(skill.name)
+                    );
+                    const skillDescription = language === 'es' ? skill.description_es : skill.description_en;
 
-                  return (
-                    <Dialog key={skill.name}>
-                      <TooltipProvider delayDuration={200}>
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <DialogTrigger asChild>
-                              <Card className="text-center p-4 transition-transform hover:scale-105 bg-background cursor-pointer h-full">
-                                <CardContent className="flex flex-col items-center justify-center gap-2 h-full p-0">
-                                  <skill.icon className="h-10 w-10 text-primary" />
-                                  <span className="font-semibold text-sm">{skill.name}</span>
-                                </CardContent>
-                              </Card>
-                            </DialogTrigger>
-                          </TooltipTrigger>
-                          <TooltipContent>
-                            <p className="max-w-xs text-center">{skillDescription}</p>
-                          </TooltipContent>
-                        </Tooltip>
-                      </TooltipProvider>
-                      <DialogContent className="max-w-md">
-                        <DialogHeader>
-                          <DialogTitle className="flex items-center gap-3 font-headline text-2xl">
-                            <skill.icon className="h-8 w-8 text-primary" />
-                            {skill.name}
-                          </DialogTitle>
-                          <DialogDescription className="pt-4 text-base text-left">
-                            {skillDescription}
-                          </DialogDescription>
-                        </DialogHeader>
-                        {projectsWithSkill.length > 0 && (
-                          <div className="mt-4">
-                            <h4 className="font-semibold mb-3 text-lg">{language === 'es' ? 'Proyectos Relevantes' : 'Relevant Projects'}</h4>
-                            <div className="space-y-2">
-                              {projectsWithSkill.map((project: Project) => (
-                                <a
-                                  key={project.title}
-                                  href={project.link}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="flex items-center justify-between p-2 rounded-md bg-secondary hover:bg-secondary/80 transition-colors"
-                                >
-                                  <span>{project.title}</span>
-                                  <ExternalLink className="h-4 w-4 text-muted-foreground" />
-                                </a>
-                              ))}
-                            </div>
-                          </div>
-                        )}
-                      </DialogContent>
-                    </Dialog>
-                  );
-                })}
-              </div>
+                    return (
+                        <CarouselItem key={skill.name}>
+                             <div className="p-1 h-full">
+                                <Dialog>
+                                <TooltipProvider delayDuration={200}>
+                                    <Tooltip>
+                                    <TooltipTrigger asChild>
+                                        <DialogTrigger asChild>
+                                        <Card className="text-center p-4 transition-transform hover:scale-105 bg-background cursor-pointer h-full">
+                                            <CardContent className="flex flex-col items-center justify-center gap-2 h-full p-0">
+                                            <skill.icon className="h-10 w-10 text-primary" />
+                                            <span className="font-semibold text-sm">{skill.name}</span>
+                                            </CardContent>
+                                        </Card>
+                                        </DialogTrigger>
+                                    </TooltipTrigger>
+                                    <TooltipContent>
+                                        <p className="max-w-xs text-center">{skillDescription}</p>
+                                    </TooltipContent>
+                                    </Tooltip>
+                                </TooltipProvider>
+                                <DialogContent className="max-w-md">
+                                    <DialogHeader>
+                                    <DialogTitle className="flex items-center gap-3 font-headline text-2xl">
+                                        <skill.icon className="h-8 w-8 text-primary" />
+                                        {skill.name}
+                                    </DialogTitle>
+                                    <DialogDescription className="pt-4 text-base text-left">
+                                        {skillDescription}
+                                    </DialogDescription>
+                                    </DialogHeader>
+                                    {projectsWithSkill.length > 0 && (
+                                    <div className="mt-4">
+                                        <h4 className="font-semibold mb-3 text-lg">{language === 'es' ? 'Proyectos Relevantes' : 'Relevant Projects'}</h4>
+                                        <div className="space-y-2">
+                                        {projectsWithSkill.map((project: Project) => (
+                                            <a
+                                            key={project.title}
+                                            href={project.link}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="flex items-center justify-between p-2 rounded-md bg-secondary hover:bg-secondary/80 transition-colors"
+                                            >
+                                            <span>{project.title}</span>
+                                            <ExternalLink className="h-4 w-4 text-muted-foreground" />
+                                            </a>
+                                        ))}
+                                        </div>
+                                    </div>
+                                    )}
+                                </DialogContent>
+                                </Dialog>
+                             </div>
+                        </CarouselItem>
+                    );
+                    })}
+                </CarouselContent>
+                <CarouselPrevious className="hidden md:flex" />
+                <CarouselNext className="hidden md:flex" />
+            </Carousel>
         </div>
       </div>
     </section>
