@@ -82,11 +82,11 @@ const projectConsultantFlow = ai.defineFlow(
   async (input) => {
 
     const cleanHistory = input.history
-      .filter(m => m.parts.every(p => p.text && p.text.trim() !== ''))
       .map(m => ({
-          role: m.role,
-          parts: m.parts.map(p => ({ text: p.text! }))
-      }));
+          ...m,
+          parts: m.parts.filter(p => typeof p.text === 'string' && p.text.trim() !== '')
+      }))
+      .filter(m => m.parts.length > 0);
 
     const response = await ai.generate({
       prompt: projectConsultantPrompt,
