@@ -69,7 +69,7 @@ export function Contact({ setIsFormFocused }: ContactProps) {
     setIsSuccess(false);
     form.reset();
   };
-
+  
   const handleCopy = (e: React.MouseEvent<HTMLButtonElement>, textToCopy: string, type: 'email' | 'phone') => {
     e.preventDefault();
     e.stopPropagation();
