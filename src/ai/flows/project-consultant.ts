@@ -71,7 +71,7 @@ const projectConsultantFlow = ai.defineFlow(
   async (input) => {
 
     const history: Message[] = input.history
-      .filter(msg => msg.content && msg.content.trim() !== '') // Robust filtering
+      .filter(msg => msg.content && msg.content.trim() !== '')
       .map(msg => ({
         role: msg.role,
         content: [{ text: msg.content }],
