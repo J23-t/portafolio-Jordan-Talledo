@@ -1,14 +1,13 @@
 "use client";
 
 import { useLanguage } from '@/contexts/language-context';
-import { Github, Linkedin, Twitter } from 'lucide-react';
+import { Linkedin, Twitter } from 'lucide-react';
 import { Button } from './ui/button';
 
 export function Footer() {
   const { t } = useLanguage();
 
   const socialLinks = [
-    { name: 'GitHub', icon: Github, url: 'https://github.com/jordantalledo' },
     { name: 'LinkedIn', icon: Linkedin, url: 'https://linkedin.com/in/jordan-enrique-talledo-salazar-924a55220' },
     { name: 'Twitter', icon: Twitter, url: 'https://twitter.com' },
   ];
