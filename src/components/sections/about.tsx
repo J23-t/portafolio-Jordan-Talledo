@@ -4,11 +4,19 @@ import Image from 'next/image';
 import { useLanguage } from '@/contexts/language-context';
 import { Button } from '@/components/ui/button';
 import { Download } from 'lucide-react';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import type { Skill } from '@/lib/types';
 
 export function About() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   return (
     <section id="about" className="py-16 md:py-24 bg-secondary">
@@ -40,12 +48,27 @@ export function About() {
             <h3 className="font-headline text-2xl md:text-3xl font-bold text-center mb-8">{t.about.skills.title}</h3>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
               {t.about.skills.list.map((skill: Skill) => (
-                <Card key={skill.name} className="text-center p-4 transition-transform hover:scale-105 bg-background">
-                  <CardContent className="flex flex-col items-center justify-center gap-2">
-                    <skill.icon className="h-10 w-10 text-primary" />
-                    <span className="font-semibold">{skill.name}</span>
-                  </CardContent>
-                </Card>
+                <Dialog key={skill.name}>
+                  <DialogTrigger asChild>
+                    <Card className="text-center p-4 transition-transform hover:scale-105 bg-background cursor-pointer h-full">
+                      <CardContent className="flex flex-col items-center justify-center gap-2 h-full">
+                        <skill.icon className="h-10 w-10 text-primary" />
+                        <span className="font-semibold">{skill.name}</span>
+                      </CardContent>
+                    </Card>
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle className="flex items-center gap-3 font-headline text-2xl">
+                        <skill.icon className="h-8 w-8 text-primary" />
+                        {skill.name}
+                      </DialogTitle>
+                      <DialogDescription className="pt-4 text-base">
+                        {language === 'es' ? skill.description_es : skill.description_en}
+                      </DialogDescription>
+                    </DialogHeader>
+                  </DialogContent>
+                </Dialog>
               ))}
             </div>
         </div>

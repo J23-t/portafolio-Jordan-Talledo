@@ -3,18 +3,78 @@ import { Smartphone, Code, Server, Cog, Database, Wind, Cpu, GitBranch, Layers, 
 import type { ContentData } from './types';
 
 const skills = [
-    { name: 'Next.js', icon: SquareCode },
-    { name: 'Kotlin', icon: Code },
-    { name: 'Flutter', icon: Smartphone },
-    { name: 'HTML', icon: Code },
-    { name: 'CSS', icon: Code },
-    { name: 'TypeScript', icon: Code },
-    { name: 'Tailwind CSS', icon: Wind },
-    { name: 'SQL Server', icon: Database },
-    { name: 'MongoDB', icon: Database },
-    { name: 'Git', icon: GitBranch },
-    { name: 'CI/CD', icon: Cpu },
-    { name: 'REST APIs', icon: Layers },
+    { 
+        name: 'Next.js', 
+        icon: SquareCode,
+        description_es: 'Framework de React para construir aplicaciones web rápidas y escalables con renderizado del lado del servidor y generación de sitios estáticos.',
+        description_en: 'A React framework for building fast and scalable web applications with server-side rendering and static site generation.'
+    },
+    { 
+        name: 'Kotlin', 
+        icon: Code,
+        description_es: 'Lenguaje de programación moderno y conciso, preferido por Google para el desarrollo de aplicaciones Android nativas.',
+        description_en: 'A modern and concise programming language, preferred by Google for native Android app development.'
+    },
+    { 
+        name: 'Flutter', 
+        icon: Smartphone,
+        description_es: 'Kit de herramientas de UI de Google para construir aplicaciones compiladas nativamente para móvil, web y escritorio desde una única base de código.',
+        description_en: 'Google\'s UI toolkit for building natively compiled applications for mobile, web, and desktop from a single codebase.'
+    },
+    { 
+        name: 'HTML', 
+        icon: Code,
+        description_es: 'Lenguaje de marcado estándar para crear páginas y aplicaciones web. Es el esqueleto de todo sitio web.',
+        description_en: 'The standard markup language for creating web pages and web applications. It is the skeleton of every website.'
+    },
+    { 
+        name: 'CSS', 
+        icon: Code,
+        description_es: 'Lenguaje de hojas de estilo utilizado para describir la presentación de un documento escrito en un lenguaje de marcado como HTML.',
+        description_en: 'A stylesheet language used for describing the presentation of a document written in a markup language like HTML.'
+    },
+    { 
+        name: 'TypeScript', 
+        icon: Code,
+        description_es: 'Superset de JavaScript que añade tipos estáticos opcionales, mejorando la robustez y mantenibilidad del código.',
+        description_en: 'A superset of JavaScript that adds optional static typing, improving code robustness and maintainability.'
+    },
+    { 
+        name: 'Tailwind CSS', 
+        icon: Wind,
+        description_es: 'Framework de CSS de "utilidad primero" que permite construir diseños personalizados rápidamente sin escribir CSS convencional.',
+        description_en: 'A "utility-first" CSS framework that allows for building custom designs quickly without writing conventional CSS.'
+    },
+    { 
+        name: 'SQL Server', 
+        icon: Database,
+        description_es: 'Sistema de gestión de bases de datos relacionales de Microsoft, utilizado para almacenar y recuperar datos en aplicaciones empresariales.',
+        description_en: 'Microsoft\'s relational database management system, used for storing and retrieving data in enterprise applications.'
+    },
+    { 
+        name: 'MongoDB', 
+        icon: Database,
+        description_es: 'Base de datos NoSQL orientada a documentos, conocida por su flexibilidad y escalabilidad para aplicaciones modernas.',
+        description_en: 'A document-oriented NoSQL database known for its flexibility and scalability for modern applications.'
+    },
+    { 
+        name: 'Git', 
+        icon: GitBranch,
+        description_es: 'Sistema de control de versiones distribuido, esencial para el seguimiento de cambios en el código fuente durante el desarrollo de software.',
+        description_en: 'A distributed version control system, essential for tracking changes in source code during software development.'
+    },
+    { 
+        name: 'CI/CD', 
+        icon: Cpu,
+        description_es: 'Prácticas de Integración y Entrega Continua, que automatizan las fases de construcción y despliegue del desarrollo de software.',
+        description_en: 'Continuous Integration and Continuous Delivery practices, which automate the build and deployment phases of software development.'
+    },
+    { 
+        name: 'REST APIs', 
+        icon: Layers,
+        description_es: 'Estilo de arquitectura para diseñar aplicaciones en red. Utilizado para crear servicios web interoperables y escalables.',
+        description_en: 'An architectural style for designing networked applications. Used to create interoperable and scalable web services.'
+    },
 ];
 
 const projects = [
@@ -56,32 +116,9 @@ const projects = [
       },
   ];
 
-const testimonials = [
-    {
-        quote_es: 'Jordan entregó un producto de alta calidad que superó nuestras expectativas. Su profesionalismo y atención al detalle son inigualables.',
-        quote_en: 'Jordan delivered a high-quality product that exceeded our expectations. His professionalism and attention to detail are unmatched.',
-        name: 'Ana García',
-        company: 'CEO de Tech Solutions',
-        avatar: 'https://picsum.photos/100/100?random=1'
-    },
-    {
-        quote_es: 'Trabajar con Jordan fue una excelente experiencia. Es un desarrollador muy talentoso y comunicativo. ¡Lo recomiendo totalmente!',
-        quote_en: 'Working with Jordan was an excellent experience. He is a very talented and communicative developer. I highly recommend him!',
-        name: 'Carlos Pérez',
-        company: 'Gerente de Producto en Innovate Corp',
-        avatar: 'https://picsum.photos/100/100?random=2'
-    },
-     {
-        quote_es: 'La aplicación móvil que desarrolló para nosotros es robusta, rápida y fácil de usar. Un trabajo excepcional.',
-        quote_en: 'The mobile app he developed for us is robust, fast, and user-friendly. Exceptional work.',
-        name: 'Laura Martinez',
-        company: 'Fundadora de FitLife',
-        avatar: 'https://picsum.photos/100/100?random=3'
-    }
-];
-
 export const content: ContentData = {
   es: {
+    language: 'es',
     nav: {
         about: 'Sobre mí',
         services: 'Servicios',
@@ -126,7 +163,7 @@ export const content: ContentData = {
             mobile: 'Apps Móviles',
             web: 'Web',
         },
-        list: projects.map(p => ({...p, description_es: p.description_es, description_en: p.description_en})),
+        list: projects,
     },
     summarizer: {
         title: 'Asistente de Código con IA',
@@ -154,12 +191,7 @@ export const content: ContentData = {
         title: 'Agendar una Cita',
         subtitle: '¿Listo para discutir tu proyecto? Agenda una reunión conmigo para explorar cómo puedo ayudarte a alcanzar tus objetivos.',
         buttonText: 'Agendar Reunión',
-        calendlyUrl: 'https://calendly.com',
-    },
-    testimonials: {
-        title: 'Lo que dicen de mí',
-        subtitle: 'Testimonios de clientes y colegas con los que he tenido el placer de trabajar.',
-        list: testimonials.map(t => ({...t, quote: t.quote_es, company: t.company, name: t.name, avatar: t.avatar}))
+        calendlyUrl: 'https://calendly.com/jordantalledo/30min',
     },
     contact: {
         title: 'Contacto',
@@ -199,6 +231,7 @@ export const content: ContentData = {
     }
   },
   en: {
+    language: 'en',
     nav: {
         about: 'About Me',
         services: 'Services',
@@ -243,7 +276,7 @@ export const content: ContentData = {
             mobile: 'Mobile Apps',
             web: 'Web',
         },
-        list: projects.map(p => ({...p, description_es: p.description_es, description_en: p.description_en})),
+        list: projects,
     },
     summarizer: {
         title: 'AI Code Assistant',
@@ -271,12 +304,7 @@ export const content: ContentData = {
         title: 'Schedule a Meeting',
         subtitle: "Ready to discuss your project? Schedule a meeting with me to explore how I can help you achieve your goals.",
         buttonText: 'Schedule Meeting',
-        calendlyUrl: 'https://calendly.com',
-    },
-    testimonials: {
-        title: 'What They Say About Me',
-        subtitle: 'Testimonials from clients and colleagues I have had the pleasure of working with.',
-        list: testimonials.map(t => ({...t, quote: t.quote_en, company: t.company, name: t.name, avatar: t.avatar}))
+        calendlyUrl: 'https://calendly.com/jordantalledo/30min',
     },
     contact: {
         title: 'Contact',

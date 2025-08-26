@@ -3,6 +3,8 @@ import type { LucideIcon } from 'lucide-react';
 export interface Skill {
   name: string;
   icon: LucideIcon;
+  description_es: string;
+  description_en: string;
 }
 
 export interface Service {
@@ -99,11 +101,6 @@ export interface Content {
         buttonText: string;
         calendlyUrl: string;
     };
-    testimonials: {
-        title: string;
-        subtitle: string;
-        list: Testimonial[];
-    },
     contact: {
         title: string;
         subtitle: string;
