@@ -35,10 +35,8 @@ const sendContactTool = ai.defineTool(
 
 const ProjectConsultantInputSchema = z.object({
   history: z.array(z.object({
-      role: z.enum(['user', 'model', 'tool']),
-      parts: z.array(z.object({
-          text: z.string().optional(),
-      }).passthrough())
+      role: z.enum(['user', 'model']),
+      content: z.string(),
   })).describe('The conversation history'),
   language: z.enum(['es', 'en']).describe('The language the assistant should respond in.')
 });
@@ -59,8 +57,8 @@ const projectConsultantPrompt = ai.definePrompt({
     prompt: `You are an expert and friendly AI assistant working for Jordan Talledo, a software developer. Your goal is to help potential clients define their project requirements efficiently and collect their contact information for Jordan to follow up.
 
 Your task is to follow this conversation flow:
-1.  **Language:** You MUST respond in the language specified: {{{language}}}. If the user switches language, you should switch too. Your very first message must be in the specified language.
-2.  **Initial Greeting:** If the conversation is new (the history is empty), greet the user in a friendly manner in their specified language and ask about their project idea.
+1.  **Language:** You MUST respond in the language specified: {{{language}}}. Your very first message must be in the specified language.
+2.  **Initial Greeting:** If the conversation is new (the history is empty or only has one 'assistant' message), greet the user in a friendly manner in their specified language and ask about their project idea.
 3.  **Information Gathering (Max 2-3 questions):** Ask key questions to understand the nature of the project (e.g., type of app/web, target audience, main feature). Be concise. Do not overwhelm the user. Remember the previous messages in the history to have a coherent conversation.
 4.  **Contact Proposal:** Once you have a general idea, stop asking questions and say something like: "Understood, this sounds like an interesting project. Would you like me to send this conversation to Jordan Talledo so he can analyze it and get in touch with you to discuss the details?".
 5.  **Tool Usage:**
@@ -81,17 +79,14 @@ const projectConsultantFlow = ai.defineFlow(
     outputSchema: ProjectConsultantOutputSchema,
   },
   async (input) => {
-
-    const cleanHistory: Message[] = input.history
-      .map(m => ({
-          role: m.role as 'user' | 'model' | 'tool',
-          parts: m.parts.filter(p => p && typeof p.text === 'string' && p.text.trim() !== '')
-      }))
-      .filter(m => m.parts.length > 0);
+    const history: Message[] = input.history.map(msg => ({
+      role: msg.role,
+      parts: [{ text: msg.content }],
+    }));
 
     const response = await ai.generate({
       prompt: projectConsultantPrompt,
-      history: cleanHistory,
+      history: history,
       tools: [sendContactTool],
       model: 'googleai/gemini-1.5-flash-latest',
       context: {

@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useRef, useEffect } from 'react';
@@ -14,8 +15,6 @@ import { Bot, Loader2, User, Send, MessageSquareQuote } from 'lucide-react';
 import { useLanguage } from '@/contexts/language-context';
 import { cn } from '@/lib/utils';
 import { ScrollArea } from '../ui/scroll-area';
-import type { Message } from '@genkit-ai/googleai';
-
 
 interface DisplayMessage {
     role: 'user' | 'assistant';
@@ -25,8 +24,7 @@ interface DisplayMessage {
 export function Summarizer() {
   const { t, language } = useLanguage();
   const { toast } = useToast();
-  const [conversation, setConversation] = useState<Message[]>([]);
-  const [displayConversation, setDisplayConversation] = useState<DisplayMessage[]>([]);
+  const [conversation, setConversation] = useState<DisplayMessage[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isInitiated, setIsInitiated] = useState(false);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
@@ -47,9 +45,7 @@ export function Summarizer() {
             setIsInitiated(true);
             try {
                 const result: ProjectConsultantOutput = await projectConsultant({ history: [], language });
-                const assistantMessage: Message = { role: 'model', parts: [{ text: result.reply }] };
-                setConversation(prev => [...prev, assistantMessage]);
-                setDisplayConversation(prev => [...prev, { role: 'assistant', content: result.reply }]);
+                setConversation(prev => [...prev, { role: 'assistant', content: result.reply }]);
             } catch (error) {
                 console.error(error);
                 toast({
@@ -74,26 +70,27 @@ export function Summarizer() {
             viewport.scrollTop = viewport.scrollHeight;
         }
     }
-  }, [displayConversation]);
+  }, [conversation]);
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     setIsLoading(true);
-    const userMessage: Message = { role: 'user', parts: [{ text: data.prompt }]};
-    const currentConversation = [...conversation, userMessage];
-
+    
+    const currentConversation: DisplayMessage[] = [...conversation, { role: 'user', content: data.prompt }];
     setConversation(currentConversation);
-    setDisplayConversation(prev => [...prev, { role: 'user', content: data.prompt }]);
     form.reset();
+
+    const historyForApi = currentConversation.map(m => ({
+        role: m.role === 'assistant' ? 'model' : 'user',
+        content: m.content
+    }));
 
     try {
         const result: ProjectConsultantOutput = await projectConsultant({
-            history: currentConversation,
+            history: historyForApi,
             language
         });
 
-      const assistantMessage: Message = { role: 'model', parts: [{ text: result.reply }] };
-      setConversation([...currentConversation, assistantMessage]);
-      setDisplayConversation(prev => [...prev, { role: 'assistant', content: result.reply }]);
+      setConversation(prev => [...prev, { role: 'assistant', content: result.reply }]);
 
     } catch (error) {
       console.error(error);
@@ -103,15 +100,14 @@ export function Summarizer() {
         variant: "destructive",
       });
       // remove the user message if the call fails
-      setConversation(currentConversation.slice(0, -1));
-      setDisplayConversation(prev => prev.slice(0, -1));
+      setConversation(prev => prev.slice(0, -1));
     } finally {
       setIsLoading(false);
     }
   }
 
   const handleContact = () => {
-    const conversationText = displayConversation.map(m => `${m.role === 'user' ? 'Cliente' : 'Asistente'}: ${m.content}`).join('\n\n');
+    const conversationText = conversation.map(m => `${m.role === 'user' ? 'Cliente' : 'Asistente'}: ${m.content}`).join('\n\n');
     const contactSection = document.getElementById('contact');
     const contactTextarea = contactSection?.querySelector('textarea[name="message"]');
     if (contactTextarea instanceof HTMLTextAreaElement) {
@@ -139,13 +135,13 @@ export function Summarizer() {
             <CardContent>
                 <ScrollArea className="h-96 pr-4" ref={scrollAreaRef}>
                     <div className="space-y-6">
-                        {displayConversation.length === 0 && !isLoading ? (
+                        {conversation.length === 0 && !isLoading ? (
                             <div className="flex flex-col items-center justify-center h-full text-center text-muted-foreground pt-12">
                                 <Bot className="h-12 w-12 mb-4" />
                                 <p>{t.summarizer.output.placeholder}</p>
                             </div>
                         ) : (
-                            displayConversation.map((message, index) => (
+                            conversation.map((message, index) => (
                                 <div key={index} className={cn("flex items-start gap-4", message.role === 'user' ? 'justify-end' : '')}>
                                     {message.role === 'assistant' && (
                                         <div className="p-2 rounded-full bg-primary/20 text-primary shrink-0">
@@ -211,7 +207,7 @@ export function Summarizer() {
                     </Form>
                 </div>
 
-                {displayConversation.length > 0 && !isLoading && !displayConversation.at(-1)?.content.includes('Jordan') && (
+                {conversation.length > 0 && !isLoading && !conversation.at(-1)?.content.includes('Jordan') && (
                     <div className="mt-6 text-center">
                         <Button onClick={handleContact}>
                             <MessageSquareQuote className="mr-2 h-4 w-4" />
