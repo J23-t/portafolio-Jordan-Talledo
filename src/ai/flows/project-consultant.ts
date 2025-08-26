@@ -80,12 +80,12 @@ const projectConsultantFlow = ai.defineFlow(
     outputSchema: ProjectConsultantOutputSchema,
   },
   async (input) => {
-    // Robust history cleaning and mapping
+    // Robust history cleaning and mapping to prevent validation errors.
     const history: Message[] = input.history
-      .filter(msg => typeof msg.content === 'string' && msg.content.trim() !== '')
+      .filter(msg => msg.content && msg.content.trim() !== '') // Ensure content exists and is not empty
       .map(msg => ({
         role: msg.role === 'assistant' ? 'model' : 'user',
-        parts: [{ text: msg.content }],
+        parts: [{ text: msg.content }], // Correctly format the 'parts' array
       }));
 
     const response = await ai.generate({
