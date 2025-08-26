@@ -10,9 +10,9 @@ import { Textarea } from '@/components/ui/textarea';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { useToast } from '@/hooks/use-toast';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
-import { Mail, Phone, Send, Loader2, CheckCircle, RefreshCcw } from 'lucide-react';
+import { Mail, Phone, Send, Loader2, CheckCircle, RefreshCcw, Copy, Check } from 'lucide-react';
 import { useState } from 'react';
-import { sendContactEmail, type ContactFormInput } from '@/ai/flows/send-contact-email';
+import { sendContactEmail } from '@/ai/flows/send-contact-email';
 
 
 export function Contact() {
@@ -20,6 +20,13 @@ export function Contact() {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [copied, setCopied] = useState('');
+
+  const handleCopy = (textToCopy: string, type: 'email' | 'phone') => {
+    navigator.clipboard.writeText(textToCopy);
+    setCopied(type);
+    setTimeout(() => setCopied(''), 2000); // Reset after 2 seconds
+  };
 
   const formSchema = z.object({
     name: z.string().min(2, { message: t.contact.form.validation.name }),
@@ -125,23 +132,25 @@ export function Contact() {
                 <h3 className="font-headline text-2xl font-bold">{t.contact.direct.title}</h3>
                 <p className="text-muted-foreground">{t.contact.direct.description}</p>
                 <div className="space-y-4">
-                    <Button asChild variant="outline" size="lg" className="w-full justify-start text-left">
-                        <a href={`mailto:${t.social.email}`}>
-                            <Mail className="mr-4 h-6 w-6 text-primary" />
-                            <div className="flex flex-col">
-                                <span>{t.social.email}</span>
-                                <span className="text-xs text-muted-foreground">{t.language === 'es' ? 'Correo Electrónico' : 'Email'}</span>
-                            </div>
-                        </a>
+                    <Button onClick={() => handleCopy(t.social.email, 'email')} variant="outline" size="lg" className="w-full justify-start text-left relative">
+                        <Mail className="mr-4 h-6 w-6 text-primary" />
+                        <div className="flex flex-col">
+                            <span>{t.social.email}</span>
+                            <span className="text-xs text-muted-foreground">{t.language === 'es' ? 'Correo Electrónico' : 'Email'}</span>
+                        </div>
+                        <span className="absolute right-4 top-1/2 -translate-y-1/2 transition-all duration-300">
+                            {copied === 'email' ? <Check className="h-5 w-5 text-green-500" /> : <Copy className="h-5 w-5 text-muted-foreground" />}
+                        </span>
                     </Button>
-                    <Button asChild variant="outline" size="lg" className="w-full justify-start text-left">
-                         <a href={`tel:${t.social.phone}`}>
-                            <Phone className="mr-4 h-6 w-6 text-primary" />
-                            <div className="flex flex-col">
-                                <span>{t.social.phone}</span>
-                                <span className="text-xs text-muted-foreground">{t.language === 'es' ? 'Teléfono' : 'Phone'}</span>
-                            </div>
-                        </a>
+                     <Button onClick={() => handleCopy(t.social.phone, 'phone')} variant="outline" size="lg" className="w-full justify-start text-left relative">
+                        <Phone className="mr-4 h-6 w-6 text-primary" />
+                        <div className="flex flex-col">
+                            <span>{t.social.phone}</span>
+                            <span className="text-xs text-muted-foreground">{t.language === 'es' ? 'Teléfono' : 'Phone'}</span>
+                        </div>
+                        <span className="absolute right-4 top-1/2 -translate-y-1/2 transition-all duration-300">
+                             {copied === 'phone' ? <Check className="h-5 w-5 text-green-500" /> : <Copy className="h-5 w-5 text-muted-foreground" />}
+                        </span>
                     </Button>
                 </div>
             </div>

@@ -9,12 +9,18 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Quote, UserCircle } from 'lucide-react';
 import type { Testimonial } from '@/lib/types';
+import React from 'react';
 
 export function Testimonials() {
   const { t, language } = useLanguage();
+
+  const plugin = React.useRef(
+    Autoplay({ delay: 5000, stopOnInteraction: true })
+  );
 
   return (
     <section id="testimonials" className="py-16 md:py-24 bg-secondary animate-fade-in-up">
@@ -25,11 +31,14 @@ export function Testimonials() {
         </div>
         
         <Carousel
+          plugins={[plugin.current]}
           opts={{
             align: "start",
             loop: t.testimonials.list.length > 1,
           }}
           className="w-full max-w-4xl mx-auto"
+          onMouseEnter={plugin.current.stop}
+          onMouseLeave={plugin.current.reset}
         >
           <CarouselContent>
             {t.testimonials.list.map((testimonial: Testimonial, index: number) => {
