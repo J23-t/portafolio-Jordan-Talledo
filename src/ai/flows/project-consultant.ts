@@ -40,7 +40,7 @@ const ProjectConsultantInputSchema = z.object({
   history: z.array(z.object({
     role: z.enum(['user', 'model']),
     content: z.string(),
-  })).optional(),
+  })),
 });
 export type ProjectConsultantInput = z.infer<typeof ProjectConsultantInputSchema>;
 
@@ -70,12 +70,12 @@ const projectConsultantFlow = ai.defineFlow(
   },
   async (input) => {
 
-    const history: Message[] = (input.history || [])
-        .filter(msg => msg.content) // Filter out messages with no content
-        .map(msg => ({
-            role: msg.role,
-            content: [{ text: msg.content }],
-        }));
+    const history: Message[] = input.history
+      .filter(msg => msg.content) // Filter out null or empty content
+      .map(msg => ({
+        role: msg.role,
+        content: [{ text: msg.content }],
+      }));
 
     const response = await ai.generate({
       prompt: projectConsultantPrompt,
