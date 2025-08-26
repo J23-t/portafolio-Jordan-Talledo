@@ -14,16 +14,9 @@ import { Bot, Loader2, User, Send, MessageSquareQuote } from 'lucide-react';
 import { useLanguage } from '@/contexts/language-context';
 import { cn } from '@/lib/utils';
 import { ScrollArea } from '../ui/scroll-area';
+import type { Message } from '@genkit-ai/googleai';
 
-interface ChatPart {
-    text?: string;
-    toolRequest?: any;
-    toolResponse?: any;
-}
-interface ChatMessage {
-    role: 'user' | 'model' | 'tool';
-    parts: ChatPart[];
-}
+
 interface DisplayMessage {
     role: 'user' | 'assistant';
     content: string;
@@ -32,7 +25,7 @@ interface DisplayMessage {
 export function Summarizer() {
   const { t, language } = useLanguage();
   const { toast } = useToast();
-  const [conversation, setConversation] = useState<ChatMessage[]>([]);
+  const [conversation, setConversation] = useState<Message[]>([]);
   const [displayConversation, setDisplayConversation] = useState<DisplayMessage[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isInitiated, setIsInitiated] = useState(false);
@@ -54,7 +47,7 @@ export function Summarizer() {
             setIsInitiated(true);
             try {
                 const result: ProjectConsultantOutput = await projectConsultant({ history: [], language });
-                const assistantMessage: ChatMessage = { role: 'model', parts: [{ text: result.reply }] };
+                const assistantMessage: Message = { role: 'model', parts: [{ text: result.reply }] };
                 setConversation(prev => [...prev, assistantMessage]);
                 setDisplayConversation(prev => [...prev, { role: 'assistant', content: result.reply }]);
             } catch (error) {
@@ -85,7 +78,7 @@ export function Summarizer() {
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     setIsLoading(true);
-    const userMessage: ChatMessage = { role: 'user', parts: [{ text: data.prompt }]};
+    const userMessage: Message = { role: 'user', parts: [{ text: data.prompt }]};
     const currentConversation = [...conversation, userMessage];
 
     setConversation(currentConversation);
@@ -93,19 +86,12 @@ export function Summarizer() {
     form.reset();
 
     try {
-        const historyForApi = currentConversation
-            .filter(m => (m.role === 'user' || m.role === 'model') && m.parts.some(p => p.text))
-            .map(m => ({
-                role: m.role,
-                parts: m.parts.filter(p => p.text).map(p => ({ text: p.text! }))
-            }));
-
         const result: ProjectConsultantOutput = await projectConsultant({
-            history: historyForApi,
+            history: currentConversation,
             language
         });
 
-      const assistantMessage: ChatMessage = { role: 'model', parts: [{ text: result.reply }] };
+      const assistantMessage: Message = { role: 'model', parts: [{ text: result.reply }] };
       setConversation([...currentConversation, assistantMessage]);
       setDisplayConversation(prev => [...prev, { role: 'assistant', content: result.reply }]);
 

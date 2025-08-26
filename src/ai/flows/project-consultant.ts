@@ -12,6 +12,7 @@
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 import { sendContactEmail } from './send-contact-email';
+import type { Message } from '@genkit-ai/googleai';
 
 
 const sendContactTool = ai.defineTool(
@@ -34,10 +35,11 @@ const sendContactTool = ai.defineTool(
 
 const ProjectConsultantInputSchema = z.object({
   history: z.array(z.object({
-      role: z.enum(['user', 'model']),
+      role: z.enum(['user', 'model', 'tool']),
       parts: z.array(z.object({
-          text: z.string(),
-      }))
+          text: z.string().optional(),
+          // Add other possible part types if necessary, like toolRequest, toolResponse
+      }).passthrough())
   })).describe('The conversation history'),
   language: z.enum(['es', 'en']).describe('The language the assistant should respond in.')
 });
@@ -81,9 +83,9 @@ const projectConsultantFlow = ai.defineFlow(
   },
   async (input) => {
 
-    const cleanHistory = input.history
+    const cleanHistory: Message[] = input.history
       .map(m => ({
-          ...m,
+          role: m.role as 'user' | 'model' | 'tool',
           parts: m.parts.filter(p => typeof p.text === 'string' && p.text.trim() !== '')
       }))
       .filter(m => m.parts.length > 0);
