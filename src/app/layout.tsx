@@ -7,6 +7,7 @@ import { Footer } from '@/components/footer';
 import { cn } from '@/lib/utils';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Space_Grotesk } from 'next/font/google';
+import { ChatBot } from '@/components/chatbot';
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ['latin'],
@@ -66,6 +67,7 @@ export default function RootLayout({
               <main className="flex-grow">{children}</main>
               <Footer />
             </div>
+            <ChatBot />
             <Toaster />
           </LanguageProvider>
         </ThemeProvider>
