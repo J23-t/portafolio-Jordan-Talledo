@@ -235,29 +235,6 @@ export const content: ContentData = {
         subtitle: 'Resultados y satisfacción que hablan por sí mismos. Descubre por qué mis clientes confían en mi trabajo.',
         list: testimonials
     },
-    summarizer: {
-        title: 'Asistente de Proyectos con IA',
-        subtitle: 'Describe tu idea y deja que mi asistente de IA te ayude a definir los requisitos de tu proyecto con preguntas clave.',
-        input: {
-            title: 'Tu Idea de Proyecto',
-            label: 'Describe tu proyecto',
-            placeholder: 'Ej: "Quiero una página web para mi negocio de muebles..."',
-        },
-        output: {
-            title: 'Asistente Virtual',
-            description: 'Conversación con la IA',
-            placeholder: 'La conversación aparecerá aquí. ¡Comienza escribiendo tu idea!',
-            contactButton: 'Contactar a Jordan con esta Conversación',
-        },
-        button: {
-            submit: 'Enviar Mensaje',
-            loading: 'Pensando...',
-        },
-        error: {
-            title: 'Error en la Conversación',
-            description: 'No se pudo obtener una respuesta. Por favor, inténtalo de nuevo.',
-        }
-    },
     scheduling: {
         title: 'Agendar una Cita',
         subtitle: '¿Listo para discutir tu proyecto? Agenda una reunión conmigo para explorar cómo puedo ayudarte a alcanzar tus objetivos.',
@@ -359,29 +336,6 @@ export const content: ContentData = {
         subtitle: 'Results and satisfaction that speak for themselves. Discover why my clients trust my work.',
         list: testimonials
     },
-    summarizer: {
-        title: 'AI Project Assistant',
-        subtitle: 'Describe your idea and let my AI assistant help you define your project requirements with key questions.',
-        input: {
-            title: 'Your Project Idea',
-            label: 'Describe your project',
-            placeholder: 'E.g., "I want a website for my furniture business..."',
-        },
-        output: {
-            title: 'Virtual Assistant',
-            description: 'Conversation with AI',
-            placeholder: 'The conversation will appear here. Start by typing your idea!',
-            contactButton: 'Contact Jordan with this Conversation',
-        },
-        button: {
-            submit: 'Send Message',
-            loading: 'Thinking...',
-        },
-        error: {
-            title: 'Conversation Error',
-            description: 'Could not get a response. Please try again.',
-        }
-    },
     scheduling: {
         title: 'Schedule a Meeting',
         subtitle: "Ready to discuss your project? Schedule a meeting with me to explore how I can help you achieve your goals.",
@@ -431,8 +385,3 @@ export const content: ContentData = {
     }
   }
 };
-
-    
-    
-
-    

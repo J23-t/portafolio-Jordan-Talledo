@@ -80,29 +80,6 @@ export interface Content {
       subtitle: string;
       list: Testimonial[];
     };
-    summarizer: {
-        title: string;
-        subtitle: string;
-        input: {
-            title: string;
-            label: string;
-            placeholder: string;
-        };
-        output: {
-            title: string;
-            description: string;
-            placeholder: string;
-            contactButton: string;
-        };
-        button: {
-            submit: string;
-            loading: string;
-        };
-        error: {
-            title: string;
-            description: string;
-        };
-    };
     scheduling: {
         title: string;
         subtitle: string;
