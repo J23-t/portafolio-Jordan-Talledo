@@ -1,4 +1,20 @@
-<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" fill="hsl(263 80% 65%)">
-  <rect width="100" height="100" rx="20" fill="hsl(222.2 84% 4.9%)" />
-  <text x="50%" y="50%" font-family="Arial, sans-serif" font-size="50" fill="hsl(210 40% 98%)" text-anchor="middle" dy=".3em" font-weight="bold">JT</text>
+<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:hsl(197, 80%, 60%);stop-opacity:1" />
+      <stop offset="100%" style="stop-color:hsl(197, 78%, 52%);stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <circle cx="50" cy="50" r="45" fill="url(#grad1)"/>
+  <text
+    x="50%"
+    y="50%"
+    dominant-baseline="central"
+    text-anchor="middle"
+    font-family="Space Grotesk, sans-serif"
+    font-size="40"
+    font-weight="bold"
+    fill="hsl(210, 40%, 98%)">
+    JT
+  </text>
 </svg>
