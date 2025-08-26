@@ -110,7 +110,7 @@ const projects = [
         description_es: 'Herramienta que extrae datos de productos desde sitios web seleccionados por el cliente para un catálogo.',
         description_en: 'A tool that extracts product data from websites selected by the client for a catalog.',
         technologies: ['Next.js', 'Puppeteer', 'Tailwind CSS'],
-        imageUrl: 'https://picsum.photos/seed/data/600/400',
+        imageUrl: '/catalogiq.png',
         link: 'https://extractordedatos.vercel.app/',
         category: 'web',
       },
