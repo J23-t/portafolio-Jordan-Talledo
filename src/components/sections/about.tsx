@@ -15,9 +15,13 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import type { Project, Skill } from '@/lib/types';
-import { Badge } from '../ui/badge';
-
 
 export function About() {
   const { t, language } = useLanguage();
@@ -55,17 +59,27 @@ export function About() {
                   const projectsWithSkill = t.projects.list.filter((project: Project) => 
                     project.technologies.includes(skill.name)
                   );
+                  const skillDescription = language === 'es' ? skill.description_es : skill.description_en;
 
                   return (
                     <Dialog key={skill.name}>
-                      <DialogTrigger asChild>
-                        <Card className="text-center p-4 transition-transform hover:scale-105 bg-background cursor-pointer h-full">
-                          <CardContent className="flex flex-col items-center justify-center gap-2 h-full p-0">
-                            <skill.icon className="h-10 w-10 text-primary" />
-                            <span className="font-semibold text-sm">{skill.name}</span>
-                          </CardContent>
-                        </Card>
-                      </DialogTrigger>
+                      <TooltipProvider delayDuration={200}>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <DialogTrigger asChild>
+                              <Card className="text-center p-4 transition-transform hover:scale-105 bg-background cursor-pointer h-full">
+                                <CardContent className="flex flex-col items-center justify-center gap-2 h-full p-0">
+                                  <skill.icon className="h-10 w-10 text-primary" />
+                                  <span className="font-semibold text-sm">{skill.name}</span>
+                                </CardContent>
+                              </Card>
+                            </DialogTrigger>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p className="max-w-xs text-center">{skillDescription}</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
                       <DialogContent className="max-w-md">
                         <DialogHeader>
                           <DialogTitle className="flex items-center gap-3 font-headline text-2xl">
@@ -73,7 +87,7 @@ export function About() {
                             {skill.name}
                           </DialogTitle>
                           <DialogDescription className="pt-4 text-base text-left">
-                            {language === 'es' ? skill.description_es : skill.description_en}
+                            {skillDescription}
                           </DialogDescription>
                         </DialogHeader>
                         {projectsWithSkill.length > 0 && (
