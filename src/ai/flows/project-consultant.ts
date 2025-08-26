@@ -92,7 +92,7 @@ const projectConsultantFlow = ai.defineFlow(
       model: 'googleai/gemini-1.5-flash-latest',
     });
 
-    const toolRequests = response.toolRequests();
+    const toolRequests = response.toolRequests;
     if (toolRequests.length > 0) {
       const toolResponses = [];
       for (const toolRequest of toolRequests) {
@@ -101,9 +101,9 @@ const projectConsultantFlow = ai.defineFlow(
       }
 
       const finalResponse = await response.continue(toolResponses);
-      return { reply: finalResponse.text() };
+      return { reply: finalResponse.text };
     }
 
-    return { reply: response.text() };
+    return { reply: response.text };
   }
 );
