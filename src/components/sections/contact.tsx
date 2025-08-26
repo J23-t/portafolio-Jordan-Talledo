@@ -27,14 +27,6 @@ export function Contact({ setIsFormFocused }: ContactProps) {
   const [isSuccess, setIsSuccess] = useState(false);
   const [copied, setCopied] = useState('');
 
-  const handleCopy = (e: React.MouseEvent<HTMLButtonElement>, textToCopy: string, type: 'email' | 'phone') => {
-    e.preventDefault();
-    e.stopPropagation();
-    navigator.clipboard.writeText(textToCopy);
-    setCopied(type);
-    setTimeout(() => setCopied(''), 2000);
-  };
-
   const formSchema = z.object({
     name: z.string().min(2, { message: t.contact.form.validation.name }),
     email: z.string().email({ message: t.contact.form.validation.email }),
@@ -77,6 +69,14 @@ export function Contact({ setIsFormFocused }: ContactProps) {
     setIsSuccess(false);
     form.reset();
   };
+
+  const handleCopy = (e: React.MouseEvent<HTMLButtonElement>, textToCopy: string, type: 'email' | 'phone') => {
+    e.preventDefault();
+    e.stopPropagation();
+    navigator.clipboard.writeText(textToCopy);
+    setCopied(type);
+    setTimeout(() => setCopied(''), 2000);
+  }
 
   return (
     <section id="contact" className="py-16 md:py-24 bg-background">
@@ -145,7 +145,7 @@ export function Contact({ setIsFormFocused }: ContactProps) {
                 <h3 className="font-headline text-2xl font-bold">{t.contact.direct.title}</h3>
                 <p className="text-muted-foreground">{t.contact.direct.description}</p>
                 <div className="space-y-4">
-                     <a href={`mailto:${t.social.email}`} className="relative block group">
+                    <a href={`mailto:${t.social.email}`} className="relative block group">
                         <Button variant="outline" size="lg" className="w-full justify-start text-left h-auto py-4 pr-12">
                             <Mail className="mr-4 h-6 w-6 text-primary flex-shrink-0" />
                             <div className="flex-grow overflow-hidden">
@@ -153,9 +153,9 @@ export function Contact({ setIsFormFocused }: ContactProps) {
                                 <span className="text-xs text-muted-foreground">{t.language === 'es' ? 'Correo Electrónico' : 'Email'}</span>
                             </div>
                         </Button>
-                        <Button 
-                            size="icon" 
-                            variant="ghost" 
+                        <Button
+                            size="icon"
+                            variant="ghost"
                             onClick={(e) => handleCopy(e, t.social.email, 'email')}
                             className="absolute right-2 top-1/2 -translate-y-1/2 ml-2 flex-shrink-0"
                         >
@@ -170,9 +170,9 @@ export function Contact({ setIsFormFocused }: ContactProps) {
                                 <span className="text-xs text-muted-foreground">{t.language === 'es' ? 'Teléfono' : 'Phone'}</span>
                             </div>
                         </Button>
-                         <Button 
-                            size="icon" 
-                            variant="ghost" 
+                         <Button
+                            size="icon"
+                            variant="ghost"
                             onClick={(e) => handleCopy(e, t.social.phone, 'phone')}
                             className="absolute right-2 top-1/2 -translate-y-1/2 ml-2 flex-shrink-0"
                         >
