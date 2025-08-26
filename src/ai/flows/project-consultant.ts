@@ -85,7 +85,7 @@ const projectConsultantFlow = ai.defineFlow(
       model: 'googleai/gemini-2.5-flash',
     });
 
-    const textResponse = response.text();
+    const textResponse = response.text;
     return { response: textResponse };
   }
 );
