@@ -170,6 +170,17 @@ const projects = [
       },
   ];
 
+const testimonials = [
+    {
+        quote_es: 'Jordan demostró una increíble capacidad técnica y un compromiso excepcional. Transformó nuestras ideas en productos funcionales y de alta calidad que superaron nuestras expectativas. Su comunicación fue siempre clara y proactiva. Es un desarrollador en quien se puede confiar para cualquier proyecto.',
+        quote_en: 'Jordan demonstrated incredible technical ability and exceptional commitment. He transformed our ideas into functional, high-quality products that exceeded our expectations. His communication was always clear and proactive. He is a developer you can trust for any project.',
+        name: 'Hugo Urrutia',
+        company_es: 'Gerente de Proyectos',
+        company_en: 'Project Manager',
+        avatar: 'https://picsum.photos/100/100?random=1',
+    }
+];
+
 export const content: ContentData = {
   es: {
     language: 'es',
@@ -218,6 +229,11 @@ export const content: ContentData = {
             web: 'Aplicación Web',
         },
         list: projects,
+    },
+    testimonials: {
+        title: 'Lo que dicen mis clientes',
+        subtitle: 'Resultados y satisfacción que hablan por sí mismos. Descubre por qué mis clientes confían en mi trabajo.',
+        list: testimonials
     },
     summarizer: {
         title: 'Asistente de Proyectos con IA',
@@ -337,6 +353,11 @@ export const content: ContentData = {
             web: 'Web App',
         },
         list: projects,
+    },
+    testimonials: {
+        title: 'What my clients say',
+        subtitle: 'Results and satisfaction that speak for themselves. Discover why my clients trust my work.',
+        list: testimonials
     },
     summarizer: {
         title: 'AI Project Assistant',

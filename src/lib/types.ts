@@ -24,9 +24,11 @@ export interface Project {
 }
 
 export interface Testimonial {
-    quote: string;
+    quote_es: string;
+    quote_en: string;
     name: string;
-    company: string;
+    company_es: string;
+    company_en: string;
     avatar: string;
 }
 
@@ -72,6 +74,11 @@ export interface Content {
             web: string;
         };
         list: (Omit<Project, 'description'>)[];
+    };
+    testimonials: {
+      title: string;
+      subtitle: string;
+      list: Testimonial[];
     };
     summarizer: {
         title: string;
