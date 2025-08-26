@@ -1,7 +1,6 @@
 
 import { notFound } from 'next/navigation';
 import { projects } from '@/lib/data';
-import { content } from '@/lib/content';
 import { Metadata, ResolvingMetadata } from 'next';
 import ProjectDetailClient from './project-detail-client';
 
@@ -22,10 +21,8 @@ export async function generateMetadata(
     }
   }
 
-  // Determine description based on a default language or check existence
   const projectDescription = project.description_es || project.description_en;
   
-  // Optionally access parent metadata
   const previousImages = (await parent).openGraph?.images || []
 
   return {
