@@ -28,7 +28,7 @@ export function About() {
                 src="/fotodeperfil.PNG"
                 alt={t.about.imageAlt}
                 fill
-                className="object-cover"
+                className="object-cover object-center"
                 data-ai-hint="developer portrait"
               />
             </div>
