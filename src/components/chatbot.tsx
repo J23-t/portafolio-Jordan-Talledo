@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState, useEffect, useRef } from 'react';
+import { Dispatch, SetStateAction, useEffect, useRef } from 'react';
 import { Bot, X, Send, Loader2 } from 'lucide-react';
 import { Button } from './ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
@@ -11,15 +11,20 @@ import { projectConsultant } from '@/ai/flows/project-consultant';
 import { ScrollArea } from './ui/scroll-area';
 import { Avatar, AvatarFallback } from './ui/avatar';
 import { cn } from '@/lib/utils';
+import { useState } from 'react';
 
 interface Message {
   role: 'user' | 'model';
   content: string;
 }
 
-export function Chatbot() {
+interface ChatbotProps {
+    messages: Message[];
+    setMessages: Dispatch<SetStateAction<Message[]>>;
+}
+
+export function Chatbot({ messages, setMessages }: ChatbotProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const { t } = useLanguage();

@@ -33,14 +33,16 @@ import {
   Copy,
   Check,
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { sendContactEmail } from "@/ai/flows/send-contact-email";
 
 interface ContactProps {
   setIsFormFocused: (isFocused: boolean) => void;
+  chatUserName?: string;
+  chatUserEmail?: string;
 }
 
-export function Contact({ setIsFormFocused }: ContactProps) {
+export function Contact({ setIsFormFocused, chatUserName, chatUserEmail }: ContactProps) {
   const { t } = useLanguage();
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -58,6 +60,15 @@ export function Contact({ setIsFormFocused }: ContactProps) {
     resolver: zodResolver(formSchema),
     defaultValues: { name: "", email: "", phone: "", message: "" },
   });
+
+  useEffect(() => {
+    if (chatUserName && !form.getValues("name")) {
+      form.setValue("name", chatUserName);
+    }
+    if (chatUserEmail && !form.getValues("email")) {
+      form.setValue("email", chatUserEmail);
+    }
+  }, [chatUserName, chatUserEmail, form]);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true);
