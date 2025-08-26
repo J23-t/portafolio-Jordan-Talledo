@@ -93,12 +93,14 @@ export function Summarizer() {
     form.reset();
 
     try {
-        const historyForApi = currentConversation.map(m => ({
-            role: m.role === 'assistant' ? 'model' : m.role,
-            parts: m.parts.map(p => ({text: p.text ?? ''}))
-        })).filter(m => m.role !== 'tool');
+        const historyForApi = currentConversation
+            .map(m => ({
+                role: m.role,
+                parts: m.parts.map(p => ({ text: p.text ?? '' }))
+            }))
+            .filter(m => m.role === 'user' || m.role === 'model');
 
-        const result: ProjectConsultantOutput = await projectConsultant({ 
+        const result: ProjectConsultantOutput = await projectConsultant({
             history: historyForApi
         });
 
