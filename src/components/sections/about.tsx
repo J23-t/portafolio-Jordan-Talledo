@@ -23,7 +23,7 @@ export function About() {
   const { t, language } = useLanguage();
   
   return (
-    <section id="about" className="py-16 md:py-24 bg-secondary animate-fade-in-up">
+    <section id="about" className="py-16 md:py-24 bg-secondary">
       <div className="container mx-auto px-4 md:px-6">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="flex justify-center">
