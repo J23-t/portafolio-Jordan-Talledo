@@ -13,6 +13,7 @@ export interface Service {
 
 export interface Project {
     title: string;
+    description: string;
     description_es: string;
     description_en: string;
     technologies: string[];
