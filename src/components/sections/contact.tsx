@@ -10,11 +10,15 @@ import { Textarea } from '@/components/ui/textarea';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { useToast } from '@/hooks/use-toast';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
-import { Mail, Phone, Send } from 'lucide-react';
+import { Mail, Phone, Send, Loader2 } from 'lucide-react';
+import { useState } from 'react';
+import { sendContactEmail } from '@/ai/flows/send-contact-email';
+
 
 export function Contact() {
   const { t } = useLanguage();
   const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const formSchema = z.object({
     name: z.string().min(2, { message: t.contact.form.validation.name }),
@@ -28,13 +32,26 @@ export function Contact() {
     defaultValues: { name: '', email: '', phone: '', message: '' },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-    toast({
-      title: t.contact.form.success.title,
-      description: t.contact.form.success.description,
-    });
-    form.reset();
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsSubmitting(true);
+    try {
+      const result = await sendContactEmail(values);
+      console.log(result);
+      toast({
+        title: t.contact.form.success.title,
+        description: t.contact.form.success.description,
+      });
+      form.reset();
+    } catch (error) {
+      console.error(error);
+      toast({
+        title: "Error",
+        description: "Failed to send message. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -65,9 +82,18 @@ export function Contact() {
                             <FormField control={form.control} name="message" render={({ field }) => (
                                 <FormItem><FormLabel>{t.contact.form.message}</FormLabel><FormControl><Textarea rows={5} {...field} /></FormControl><FormMessage /></FormItem>
                             )} />
-                            <Button type="submit" size="lg" className="w-full">
-                                <Send className="mr-2 h-5 w-5" />
-                                {t.contact.form.submit}
+                            <Button type="submit" size="lg" className="w-full" disabled={isSubmitting}>
+                                {isSubmitting ? (
+                                    <>
+                                        <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                                        {t.language === 'es' ? 'Enviando...' : 'Sending...'}
+                                    </>
+                                ) : (
+                                    <>
+                                        <Send className="mr-2 h-5 w-5" />
+                                        {t.contact.form.submit}
+                                    </>
+                                )}
                             </Button>
                         </form>
                     </Form>
