@@ -13,9 +13,13 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui
 import { Mail, Phone, Send, Loader2, CheckCircle, RefreshCcw, Copy, Check } from 'lucide-react';
 import { useState } from 'react';
 import { sendContactEmail } from '@/ai/flows/send-contact-email';
+import { cn } from '@/lib/utils';
 
+interface ContactProps {
+  setIsFormFocused: (isFocused: boolean) => void;
+}
 
-export function Contact() {
+export function Contact({ setIsFormFocused }: ContactProps) {
   const { t } = useLanguage();
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -79,56 +83,62 @@ export function Contact() {
           <p className="text-muted-foreground mt-2">{t.contact.subtitle}</p>
         </div>
         <div className="grid md:grid-cols-2 gap-12">
-            <Card>
-                <CardHeader>
-                    <CardTitle className="font-headline">{t.contact.form.title}</CardTitle>
-                    <CardDescription>{t.contact.form.description}</CardDescription>
-                </CardHeader>
-                <CardContent>
-                    {isSuccess ? (
-                        <div className="flex flex-col items-center justify-center text-center h-full min-h-[400px] space-y-4">
-                            <CheckCircle className="h-16 w-16 text-green-500" />
-                            <h3 className="text-2xl font-bold">{t.contact.form.success.title}</h3>
-                            <p className="text-muted-foreground">{t.contact.form.success.description}</p>
-                            <Button onClick={handleResetForm} variant="outline">
-                                <RefreshCcw className="mr-2 h-4 w-4" />
-                                {t.contact.form.success.resetButton}
-                            </Button>
-                        </div>
-                    ) : (
-                        <Form {...form}>
-                            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                                <FormField control={form.control} name="name" render={({ field }) => (
-                                    <FormItem><FormLabel>{t.contact.form.name}</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
-                                )} />
-                                <FormField control={form.control} name="email" render={({ field }) => (
-                                    <FormItem><FormLabel>{t.contact.form.email}</FormLabel><FormControl><Input type="email" {...field} /></FormControl><FormMessage /></FormItem>
-                                )} />
-                                <FormField control={form.control} name="phone" render={({ field }) => (
-                                    <FormItem><FormLabel>{t.contact.form.phone}</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
-                                )} />
-                                <FormField control={form.control} name="message" render={({ field }) => (
-                                    <FormItem><FormLabel>{t.contact.form.message}</FormLabel><FormControl><Textarea rows={5} {...field} /></FormControl><FormMessage /></FormItem>
-                                )} />
-                                <Button type="submit" size="lg" className="w-full" disabled={isSubmitting}>
-                                    {isSubmitting ? (
-                                        <>
-                                            <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                                            {t.language === 'es' ? 'Enviando...' : 'Sending...'}
-                                        </>
-                                    ) : (
-                                        <>
-                                            <Send className="mr-2 h-5 w-5" />
-                                            {t.contact.form.submit}
-                                        </>
-                                    )}
-                                 </Button>
-                            </form>
-                        </Form>
-                    )}
-                </CardContent>
-            </Card>
-            <div className="space-y-6 flex flex-col justify-center">
+            <div
+                onFocus={() => setIsFormFocused(true)}
+                onBlur={() => setIsFormFocused(false)}
+                className="relative z-20 transition-all duration-300"
+            >
+                <Card>
+                    <CardHeader>
+                        <CardTitle className="font-headline">{t.contact.form.title}</CardTitle>
+                        <CardDescription>{t.contact.form.description}</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        {isSuccess ? (
+                            <div className="flex flex-col items-center justify-center text-center h-full min-h-[400px] space-y-4">
+                                <CheckCircle className="h-16 w-16 text-green-500" />
+                                <h3 className="text-2xl font-bold">{t.contact.form.success.title}</h3>
+                                <p className="text-muted-foreground">{t.contact.form.success.description}</p>
+                                <Button onClick={handleResetForm} variant="outline">
+                                    <RefreshCcw className="mr-2 h-4 w-4" />
+                                    {t.contact.form.success.resetButton}
+                                </Button>
+                            </div>
+                        ) : (
+                            <Form {...form}>
+                                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                                    <FormField control={form.control} name="name" render={({ field }) => (
+                                        <FormItem><FormLabel>{t.contact.form.name}</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
+                                    )} />
+                                    <FormField control={form.control} name="email" render={({ field }) => (
+                                        <FormItem><FormLabel>{t.contact.form.email}</FormLabel><FormControl><Input type="email" {...field} /></FormControl><FormMessage /></FormItem>
+                                    )} />
+                                    <FormField control={form.control} name="phone" render={({ field }) => (
+                                        <FormItem><FormLabel>{t.contact.form.phone}</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
+                                    )} />
+                                    <FormField control={form.control} name="message" render={({ field }) => (
+                                        <FormItem><FormLabel>{t.contact.form.message}</FormLabel><FormControl><Textarea rows={5} {...field} /></FormControl><FormMessage /></FormItem>
+                                    )} />
+                                    <Button type="submit" size="lg" className="w-full" disabled={isSubmitting}>
+                                        {isSubmitting ? (
+                                            <>
+                                                <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                                                {t.language === 'es' ? 'Enviando...' : 'Sending...'}
+                                            </>
+                                        ) : (
+                                            <>
+                                                <Send className="mr-2 h-5 w-5" />
+                                                {t.contact.form.submit}
+                                            </>
+                                        )}
+                                    </Button>
+                                </form>
+                            </Form>
+                        )}
+                    </CardContent>
+                </Card>
+            </div>
+            <div className="space-y-6 flex flex-col justify-center relative z-20">
                 <h3 className="font-headline text-2xl font-bold">{t.contact.direct.title}</h3>
                 <p className="text-muted-foreground">{t.contact.direct.description}</p>
                 <div className="space-y-4">
