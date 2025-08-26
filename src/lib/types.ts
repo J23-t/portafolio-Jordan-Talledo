@@ -73,7 +73,7 @@ export interface Content {
             mobile: string;
             web: string;
         };
-        list: (Omit<Project, 'description'>)[];
+        list: Project[];
     };
     testimonials: {
       title: string;
