@@ -1,3 +1,4 @@
+
 import { Smartphone, Code, Server, Cog, Database, Wind, Cpu, GitBranch, Layers, SquareCode, Bot } from 'lucide-react';
 import type { ContentData } from './types';
 
@@ -18,39 +19,39 @@ const skills = [
 
 const projects = [
     {
-      title: 'Aplicación de E-commerce',
-      description_es: 'Plataforma completa de comercio electrónico con carrito de compras, pasarela de pagos y panel de administración.',
-      description_en: 'Complete e-commerce platform with a shopping cart, payment gateway, and admin panel.',
-      technologies: ['Next.js', 'Tailwind CSS', 'MongoDB', 'Stripe'],
+      title: 'Amoblarq',
+      description_es: 'Plataforma de comercio electrónico para una empresa de mueblería, con catálogo de productos y carrito de compras.',
+      description_en: 'E-commerce platform for a furniture company, with product catalog and shopping cart.',
+      technologies: ['Next.js', 'Tailwind CSS', 'MongoDB'],
       imageUrl: 'https://picsum.photos/600/401',
-      link: '#',
+      link: 'https://amoblarq.vercel.app/',
       category: 'web',
     },
     {
-      title: 'App de Fitness Móvil',
-      description_es: 'Aplicación para iOS y Android que registra entrenamientos, dietas y progreso del usuario.',
-      description_en: 'App for iOS and Android that tracks workouts, diets, and user progress.',
-      technologies: ['Flutter', 'Firebase', 'Google Fit API'],
+      title: 'Ferrefast',
+      description_es: 'Página web para una ferretería, con catálogo de productos y funcionalidades para cotizaciones.',
+      description_en: 'Website for a hardware store, with a product catalog and quotation functionalities.',
+      technologies: ['Next.js', 'Tailwind CSS', 'Firebase'],
       imageUrl: 'https://picsum.photos/600/402',
-      link: '#',
-      category: 'mobile',
-    },
-    {
-      title: 'Dashboard de Análisis de Datos',
-      description_es: 'Panel de control interactivo para la visualización de datos de ventas en tiempo real.',
-      description_en: 'Interactive dashboard for real-time sales data visualization.',
-      technologies: ['React', 'D3.js', 'Node.js', 'SQL Server'],
-      imageUrl: 'https://picsum.photos/600/403',
-      link: '#',
+      link: 'https://ferrefastoficial.vercel.app/',
       category: 'web',
     },
     {
-        title: 'Asistente de IA para Desarrolladores',
-        description_es: 'Herramienta que utiliza IA para generar, depurar y optimizar código en varios lenguajes de programación.',
-        description_en: 'An AI-powered tool to generate, debug, and optimize code across multiple programming languages.',
-        technologies: ['Next.js', 'Genkit', 'Tailwind CSS'],
+      title: 'Asistencia AOF',
+      description_es: 'Aplicación para controlar y verificar la asistencia de los trabajadores de una empresa.',
+      description_en: 'Application to control and verify the attendance of a company\'s workers.',
+      technologies: ['React', 'Node.js', 'SQL Server'],
+      imageUrl: 'https://picsum.photos/600/403',
+      link: 'https://asistencialoficial.netlify.app/',
+      category: 'web',
+    },
+    {
+        title: 'Extractor de Datos IQ',
+        description_es: 'Herramienta para extraer datos de productos desde la página web elegida por el cliente.',
+        description_en: 'A tool to extract product data from the website chosen by the client.',
+        technologies: ['Next.js', 'Puppeteer', 'Tailwind CSS'],
         imageUrl: 'https://picsum.photos/600/404',
-        link: '#summarizer',
+        link: 'https://extractordedatos.vercel.app/',
         category: 'web',
       },
   ];
