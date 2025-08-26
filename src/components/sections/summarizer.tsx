@@ -20,7 +20,7 @@ export function Summarizer() {
   const [isLoading, setIsLoading] = useState(false);
 
   const FormSchema = z.object({
-    content: z.string().min(50, { message: language === 'es' ? "El contenido debe tener al menos 50 caracteres." : "Content must be at least 50 characters." }),
+    content: z.string().min(1, { message: language === 'es' ? "El contenido no puede estar vacío." : "Content cannot be empty." }),
   });
 
 
