@@ -27,11 +27,12 @@ export function Contact({ setIsFormFocused }: ContactProps) {
   const [isSuccess, setIsSuccess] = useState(false);
   const [copied, setCopied] = useState('');
 
-  const handleCopy = (e: React.MouseEvent, textToCopy: string, type: 'email' | 'phone') => {
-    e.preventDefault(); // Prevent the link from being followed
+  const handleCopy = (e: React.MouseEvent<HTMLButtonElement>, textToCopy: string, type: 'email' | 'phone') => {
+    e.preventDefault();
+    e.stopPropagation();
     navigator.clipboard.writeText(textToCopy);
     setCopied(type);
-    setTimeout(() => setCopied(''), 2000); // Reset after 2 seconds
+    setTimeout(() => setCopied(''), 2000);
   };
 
   const formSchema = z.object({
@@ -113,13 +114,13 @@ export function Contact({ setIsFormFocused }: ContactProps) {
                                         <FormItem><FormLabel>{t.contact.form.name}</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
                                     )} />
                                     <FormField control={form.control} name="email" render={({ field }) => (
-                                        <FormItem><FormLabel>{t.contact.form.email}</FormLabel><FormControl><Input type="email" {...field} /></FormControl><FormMessage /></FormItem>
+                                        <FormItem><FormLabel>{t.contact.form.email}</FormLabel><FormControl><Input type="email" {...field} /></FormControl><FormMessage /></Item>
                                     )} />
                                     <FormField control={form.control} name="phone" render={({ field }) => (
-                                        <FormItem><FormLabel>{t.contact.form.phone}</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
+                                        <FormItem><FormLabel>{t.contact.form.phone}</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></Item>
                                     )} />
                                     <FormField control={form.control} name="message" render={({ field }) => (
-                                        <FormItem><FormLabel>{t.contact.form.message}</FormLabel><FormControl><Textarea rows={5} {...field} /></FormControl><FormMessage /></FormItem>
+                                        <FormItem><FormLabel>{t.contact.form.message}</FormLabel><FormControl><Textarea rows={5} {...field} /></FormControl><FormMessage /></Item>
                                     )} />
                                     <Button type="submit" size="lg" className="w-full" disabled={isSubmitting}>
                                         {isSubmitting ? (
@@ -144,28 +145,38 @@ export function Contact({ setIsFormFocused }: ContactProps) {
                 <h3 className="font-headline text-2xl font-bold">{t.contact.direct.title}</h3>
                 <p className="text-muted-foreground">{t.contact.direct.description}</p>
                 <div className="space-y-4">
-                    <a href={`mailto:${t.social.email}`} className="block">
-                        <Button variant="outline" size="lg" className="w-full justify-start text-left h-auto py-4">
+                     <a href={`mailto:${t.social.email}`} className="relative block group">
+                        <Button variant="outline" size="lg" className="w-full justify-start text-left h-auto py-4 pr-12">
                             <Mail className="mr-4 h-6 w-6 text-primary flex-shrink-0" />
-                            <div className="flex-grow">
+                            <div className="flex-grow overflow-hidden">
                                 <span className="block break-all">{t.social.email}</span>
                                 <span className="text-xs text-muted-foreground">{t.language === 'es' ? 'Correo Electrónico' : 'Email'}</span>
                             </div>
-                             <Button size="icon" variant="ghost" onClick={(e) => handleCopy(e, t.social.email, 'email')} className="ml-2 flex-shrink-0">
-                                {copied === 'email' ? <Check className="h-5 w-5 text-green-500" /> : <Copy className="h-5 w-5 text-muted-foreground" />}
-                             </Button>
+                        </Button>
+                        <Button 
+                            size="icon" 
+                            variant="ghost" 
+                            onClick={(e) => handleCopy(e, t.social.email, 'email')}
+                            className="absolute right-2 top-1/2 -translate-y-1/2 ml-2 flex-shrink-0"
+                        >
+                            {copied === 'email' ? <Check className="h-5 w-5 text-green-500" /> : <Copy className="h-5 w-5 text-muted-foreground" />}
                         </Button>
                     </a>
-                    <a href={`tel:${t.social.phone}`} className="block">
-                        <Button variant="outline" size="lg" className="w-full justify-start text-left h-auto py-4">
+                    <a href={`tel:${t.social.phone}`} className="relative block group">
+                        <Button variant="outline" size="lg" className="w-full justify-start text-left h-auto py-4 pr-12">
                             <Phone className="mr-4 h-6 w-6 text-primary flex-shrink-0" />
-                            <div className="flex-grow">
+                            <div className="flex-grow overflow-hidden">
                                 <span className="block">{t.social.phone}</span>
                                 <span className="text-xs text-muted-foreground">{t.language === 'es' ? 'Teléfono' : 'Phone'}</span>
                             </div>
-                            <Button size="icon" variant="ghost" onClick={(e) => handleCopy(e, t.social.phone, 'phone')} className="ml-2 flex-shrink-0">
-                                {copied === 'phone' ? <Check className="h-5 w-5 text-green-500" /> : <Copy className="h-5 w-5 text-muted-foreground" />}
-                            </Button>
+                        </Button>
+                         <Button 
+                            size="icon" 
+                            variant="ghost" 
+                            onClick={(e) => handleCopy(e, t.social.phone, 'phone')}
+                            className="absolute right-2 top-1/2 -translate-y-1/2 ml-2 flex-shrink-0"
+                        >
+                            {copied === 'phone' ? <Check className="h-5 w-5 text-green-500" /> : <Copy className="h-5 w-5 text-muted-foreground" />}
                         </Button>
                     </a>
                 </div>
