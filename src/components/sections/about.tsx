@@ -25,7 +25,7 @@ export function About() {
           <div className="flex justify-center">
             <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden shadow-2xl border-4 border-primary">
               <Image
-                src="https://picsum.photos/400/400?random=10"
+                src="/fotodeperfil.PNG"
                 alt={t.about.imageAlt}
                 fill
                 className="object-cover"
