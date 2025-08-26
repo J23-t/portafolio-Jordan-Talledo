@@ -66,8 +66,8 @@ export function Projects() {
             loop: true,
              slidesPerView: 1,
             breakpoints: {
-                '(min-width: 640px)': { slidesPerView: 2 },
-                '(min-width: 1024px)': { slidesPerView: 3 },
+                '(min-width: 768px)': { slidesPerView: 2 },
+                '(min-width: 1280px)': { slidesPerView: 3 },
             },
           }}
           className="w-full max-w-6xl mx-auto"
