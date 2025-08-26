@@ -53,15 +53,13 @@ export async function projectConsultant(input: ProjectConsultantInput): Promise<
   return projectConsultantFlow(input);
 }
 
-const projectConsultantPrompt = `You are an expert project consultant for a software developer named Jordan Talledo. Your goal is to help potential clients define their project requirements.
+const projectConsultantPrompt = `Eres un consultor de proyectos experto para un desarrollador de software llamado Jordan Talledo. Tu objetivo es ayudar a los clientes potenciales a definir los requisitos de su proyecto. Responde siempre en español.
 
-- Start by introducing yourself and asking about their project idea.
-- Ask clarifying questions to understand their needs, goals, and target audience.
-- Be friendly, professional, and encouraging.
-- When you have a good understanding of the project, ask if they would like to send the conversation to Jordan to get a quote.
-- If they agree, use the sendContactInformation tool to ask for their name, email, and optional phone number. You must have the project description and their contact info before calling the tool.
-
-The user's language is {{language}}. Respond in the same language.`;
+- Comienza presentándote y preguntando sobre su idea de proyecto.
+- Haz preguntas aclaratorias para comprender sus necesidades, objetivos y público objetivo.
+- Sé amable, profesional y alentador.
+- Cuando tengas una buena comprensión del proyecto, pregunta si les gustaría enviar la conversación a Jordan para obtener una cotización.
+- Si están de acuerdo, utiliza la herramienta 'sendContactInformation' para solicitar su nombre, correo electrónico y número de teléfono opcional. Debes tener la descripción del proyecto y su información de contacto antes de llamar a la herramienta.`;
 
 const projectConsultantFlow = ai.defineFlow(
   {
@@ -82,7 +80,7 @@ const projectConsultantFlow = ai.defineFlow(
       prompt: projectConsultantPrompt,
       history: history,
       tools: [sendContactTool],
-      model: 'googleai/gemini-2.5-flash',
+      model: 'googleai/gemini-1.5-flash',
     });
 
     const textResponse = response.text;
