@@ -1,5 +1,5 @@
 
-import { Smartphone, Code, Server, Cog, Database, Wind, Cpu, GitBranch, Layers, SquareCode, Bot } from 'lucide-react';
+import { Smartphone, Code, Server, Cog, Database, Wind, Cpu, GitBranch, Layers, SquareCode, Bot, BrainCircuit } from 'lucide-react';
 import type { ContentData } from './types';
 
 const skills = [
@@ -22,6 +22,30 @@ const skills = [
         description_en: 'Google\'s UI toolkit for building natively compiled applications for mobile, web, and desktop from a single codebase.'
     },
     { 
+        name: 'JavaScript', 
+        icon: Code,
+        description_es: 'El lenguaje de programación fundamental para la web, esencial para crear sitios interactivos y dinámicos.',
+        description_en: 'The fundamental programming language for the web, essential for creating interactive and dynamic sites.'
+    },
+    { 
+        name: 'TypeScript', 
+        icon: Code,
+        description_es: 'Superset de JavaScript que añade tipos estáticos opcionales, mejorando la robustez y mantenibilidad del código.',
+        description_en: 'A superset of JavaScript that adds optional static typing, improving code robustness and maintainability.'
+    },
+    { 
+        name: 'Python', 
+        icon: Code,
+        description_es: 'Un lenguaje de programación versátil y de alto nivel, conocido por su sintaxis clara y su amplio uso en desarrollo web y ciencia de datos.',
+        description_en: 'A versatile, high-level programming language known for its clear syntax and widespread use in web development and data science.'
+    },
+    { 
+        name: 'Java', 
+        icon: Code,
+        description_es: 'Un lenguaje de programación robusto y orientado a objetos, ampliamente utilizado para aplicaciones empresariales y desarrollo Android.',
+        description_en: 'A robust, object-oriented programming language widely used for enterprise applications and Android development.'
+    },
+    { 
         name: 'HTML', 
         icon: Code,
         description_es: 'Lenguaje de marcado estándar para crear páginas y aplicaciones web. Es el esqueleto de todo sitio web.',
@@ -32,12 +56,6 @@ const skills = [
         icon: Code,
         description_es: 'Lenguaje de hojas de estilo utilizado para describir la presentación de un documento escrito en un lenguaje de marcado como HTML.',
         description_en: 'A stylesheet language used for describing the presentation of a document written in a markup language like HTML.'
-    },
-    { 
-        name: 'TypeScript', 
-        icon: Code,
-        description_es: 'Superset de JavaScript que añade tipos estáticos opcionales, mejorando la robustez y mantenibilidad del código.',
-        description_en: 'A superset of JavaScript that adds optional static typing, improving code robustness and maintainability.'
     },
     { 
         name: 'Tailwind CSS', 
@@ -74,6 +92,12 @@ const skills = [
         icon: Layers,
         description_es: 'Estilo de arquitectura para diseñar aplicaciones en red. Utilizado para crear servicios web interoperables y escalables.',
         description_en: 'An architectural style for designing networked applications. Used to create interoperable and scalable web services.'
+    },
+    { 
+        name: 'Adaptabilidad Tecnológica', 
+        icon: BrainCircuit,
+        description_es: 'Capacidad para aprender y dominar rápidamente nuevas tecnologías, lenguajes y frameworks según las necesidades del proyecto.',
+        description_en: 'Ability to quickly learn and master new technologies, languages, and frameworks based on project needs.'
     },
 ];
 
