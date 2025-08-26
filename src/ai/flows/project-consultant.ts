@@ -11,14 +11,43 @@
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
+import { sendContactEmail, type ContactFormInput } from './send-contact-email';
+
+
+const sendContactTool = ai.defineTool(
+    {
+      name: 'sendContactInformation',
+      description: 'When the user agrees to be contacted, use this tool to collect their contact details and the conversation summary.',
+      inputSchema: z.object({
+        name: z.string().describe("The user's full name."),
+        email: z.string().email().describe("The user's email address."),
+        phone: z.string().optional().describe("The user's phone number."),
+        message: z.string().describe("The full conversation history to be sent in the email body."),
+      }),
+      outputSchema: z.string(),
+    },
+    async (input) => {
+        await sendContactEmail(input);
+        return "Contact information has been sent to Jordan Talledo. He will be in touch with you shortly.";
+    }
+);
 
 const MessageSchema = z.object({
-    role: z.enum(['user', 'assistant']),
-    text: z.string(),
+    role: z.enum(['user', 'assistant', 'tool']),
+    content: z.array(z.object({
+        text: z.string().optional(),
+        toolRequest: z.any().optional(),
+        toolResponse: z.any().optional(),
+    }))
 });
 
 const ProjectConsultantInputSchema = z.object({
-  history: z.array(MessageSchema).describe('The conversation history'),
+  history: z.array(z.object({
+      role: z.enum(['user', 'model']),
+      parts: z.array(z.object({
+          text: z.string()
+      }))
+  })).describe('The conversation history'),
 });
 export type ProjectConsultantInput = z.infer<typeof ProjectConsultantInputSchema>;
 
@@ -33,22 +62,33 @@ export async function projectConsultant(input: ProjectConsultantInput): Promise<
 
 const projectConsultantPrompt = ai.definePrompt({
   name: 'projectConsultantPrompt',
+  tools: [sendContactTool],
   input: {schema: ProjectConsultantInputSchema},
   output: {schema: ProjectConsultantOutputSchema},
-  prompt: `Eres un asistente de IA experto y amigable que trabaja para Jordan Talledo, un desarrollador de software. Tu objetivo es ayudar a los clientes potenciales a definir los requisitos de su proyecto de forma eficiente.
+  prompt: `Eres un asistente de IA experto y amigable que trabaja para Jordan Talledo, un desarrollador de software. Tu objetivo es ayudar a los clientes potenciales a definir los requisitos de su proyecto de forma eficiente y recopilar su información de contacto para que Jordan pueda hacer un seguimiento.
 
-Tu tarea es mantener una conversación concisa con el usuario.
-- Si el usuario acaba de empezar, salúdalo y pregúntale sobre su idea.
-- Haz 1 o 2 preguntas clave para entender la naturaleza del proyecto (ej: tipo de app/web, público, objetivo principal).
-- Después de 2 o 3 intercambios, una vez que tengas una idea general, deja de hacer preguntas.
-- Resume brevemente lo que has entendido y luego informa al usuario de manera formal que su solicitud será revisada por Jordan.
-- Ejemplo de conclusión: "Entendido. Se trata de una página web para [negocio] con [característica principal]. He recopilado la información inicial. Puede utilizar el botón de abajo para enviar esta conversación directamente a Jordan Talledo, quien se pondrá en contacto con usted para analizar los detalles. ¡Gracias por su interés!"
-- Mantén siempre un tono amigable, profesional y servicial.
-- Responde en el idioma en que el usuario te escribe.
+Tu tarea es seguir este flujo de conversación:
+1.  **Saludo Inicial:** Si la conversación es nueva, saluda al usuario amistosamente y pregunta sobre su idea de proyecto.
+2.  **Recopilación de Información (Máx. 2-3 preguntas):** Haz preguntas clave para entender la naturaleza del proyecto (ej: tipo de app/web, público objetivo, característica principal). Sé conciso. No abrumes al usuario.
+3.  **Propuesta de Contacto:** Una vez que tengas una idea general, detén las preguntas y di algo como: "Entendido, esto suena como un proyecto interesante. ¿Te gustaría que le envíe esta conversación a Jordan Talledo para que pueda analizarla y ponerse en contacto contigo para discutir los detalles?".
+4.  **Uso de la Herramienta:**
+    *   Si el usuario dice **SÍ** (o algo similar), responde con: "¡Genial! Para que pueda contactarte, ¿podrías darme tu nombre completo, correo electrónico y, si lo deseas, tu número de teléfono?".
+    *   **Espera** a que el usuario proporcione la información.
+    *   Una vez que el usuario proporcione sus datos, **DEBES** usar la herramienta \`sendContactInformation\` para enviar la información. Pasa el **historial completo de la conversación** en el campo \`message\`.
+    *   Una vez que la herramienta se ejecute, informa al usuario del resultado (por ejemplo, "¡Perfecto! Le he enviado la información a Jordan. Se pondrá en contacto contigo pronto.").
+    *   Si el usuario dice **NO**, responde amablemente, algo como: "Entendido. Si cambias de opinión, no dudes en decírmelo. ¿Hay algo más en lo que pueda ayudarte?".
+5.  **Reglas Generales:**
+    *   Mantén siempre un tono amigable, profesional y servicial.
+    *   Responde en el idioma en que el usuario te escribe.
+    *   No inventes información.
 
 Historial de la conversación:
 {{#each history}}
-{{role}}: {{{text}}}
+  {{#if (eq role 'user')}}
+    User: {{{parts.0.text}}}
+  {{else}}
+    Model: {{{parts.0.text}}}
+  {{/if}}
 {{/each}}
 `,
 });
@@ -60,7 +100,22 @@ const projectConsultantFlow = ai.defineFlow(
     outputSchema: ProjectConsultantOutputSchema,
   },
   async input => {
-    const {output} = await projectConsultantPrompt(input);
-    return output!;
+    const response = await projectConsultantPrompt.generate({
+        history: input.history,
+    });
+    
+    const toolRequests = response.toolRequests();
+    if (toolRequests.length > 0) {
+        const toolResponses = [];
+        for (const toolRequest of toolRequests) {
+            const toolResponse = await toolRequest.execute();
+            toolResponses.push(toolResponse);
+        }
+        
+        const finalResponse = await response.continue(toolResponses);
+        return { reply: finalResponse.text() };
+    }
+    
+    return { reply: response.text() };
   }
 );
