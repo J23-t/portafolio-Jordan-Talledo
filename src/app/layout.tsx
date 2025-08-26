@@ -56,7 +56,7 @@ export default function RootLayout({
       <body className={cn('font-body antialiased', spaceGrotesk.variable)}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="dark"
+          defaultTheme="light"
           disableTransitionOnChange
         >
           <LanguageProvider>
