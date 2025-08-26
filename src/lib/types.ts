@@ -85,6 +85,7 @@ export interface Content {
             title: string;
             description: string;
             placeholder: string;
+            contactButton: string;
         };
         button: {
             submit: string;
