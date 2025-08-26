@@ -43,7 +43,7 @@ const MessageSchema = z.object({
 
 const ProjectConsultantInputSchema = z.object({
   history: z.array(z.object({
-      role: z.enum(['user', 'model', 'tool']),
+      role: z.enum(['user', 'model']),
       parts: z.array(z.object({
           text: z.string()
       }))
@@ -61,7 +61,10 @@ export async function projectConsultant(input: ProjectConsultantInput): Promise<
   return projectConsultantFlow(input);
 }
 
-const projectConsultantPrompt = `You are an expert and friendly AI assistant working for Jordan Talledo, a software developer. Your goal is to help potential clients define their project requirements efficiently and collect their contact information for Jordan to follow up.
+const projectConsultantPrompt = ai.definePrompt({
+    name: 'projectConsultantPrompt',
+    input: { schema: z.object({ language: z.enum(['es', 'en']) }) },
+    prompt: `You are an expert and friendly AI assistant working for Jordan Talledo, a software developer. Your goal is to help potential clients define their project requirements efficiently and collect their contact information for Jordan to follow up.
 
 Your task is to follow this conversation flow:
 1.  **Language:** You MUST respond in the language specified: {{{language}}}. If the user switches language, you should switch too. Your very first message must be in the specified language.
@@ -78,7 +81,7 @@ Your task is to follow this conversation flow:
     *   Always maintain a friendly, professional, and helpful tone.
     *   Do not invent information.
     *   Remember the previous messages in the history to have a coherent conversation.
-`;
+`});
 
 const projectConsultantFlow = ai.defineFlow(
   {
@@ -92,7 +95,7 @@ const projectConsultantFlow = ai.defineFlow(
       history: input.history,
       tools: [sendContactTool],
       model: 'googleai/gemini-1.5-flash-latest',
-      input: {
+      context: {
         language: input.language
       }
     });
