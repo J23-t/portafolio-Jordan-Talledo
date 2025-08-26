@@ -17,8 +17,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        headline: ['"Space Grotesk"', 'sans-serif'],
-        body: ['Inter', 'sans-serif'],
+        headline: ['var(--font-space-grotesk)', 'sans-serif'],
+        body: ['var(--font-space-grotesk)', 'sans-serif'],
         code: ['monospace'],
       },
       colors: {
@@ -83,6 +83,10 @@ export default {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
       },
+      boxShadow: {
+        'glow-primary': '0 0 15px hsl(var(--primary) / 0.5)',
+        'glow-accent': '0 0 15px hsl(var(--accent) / 0.5)',
+      }
     },
   },
   plugins: [require('tailwindcss-animate'), require('@tailwindcss/typography')],
