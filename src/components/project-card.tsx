@@ -28,7 +28,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
   return (
     <Dialog>
       <Card className="flex flex-col h-full overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1.5 bg-secondary/50">
-        <div className="aspect-video relative">
+        <div className="aspect-video relative bg-muted">
           <Image
             src={project.imageUrl}
             alt={project.title}
@@ -64,7 +64,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
           <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
-          <div className="aspect-video relative rounded-lg overflow-hidden">
+          <div className="aspect-video relative rounded-lg overflow-hidden bg-muted">
              <Image
               src={project.imageUrl}
               alt={project.title}
