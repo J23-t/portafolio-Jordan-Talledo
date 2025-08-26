@@ -30,7 +30,7 @@ interface DisplayMessage {
 }
 
 export function Summarizer() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { toast } = useToast();
   const [conversation, setConversation] = useState<ChatMessage[]>([]);
   const [displayConversation, setDisplayConversation] = useState<DisplayMessage[]>([]);
@@ -53,7 +53,7 @@ export function Summarizer() {
             setIsLoading(true);
             setIsInitiated(true);
             try {
-                const result: ProjectConsultantOutput = await projectConsultant({ history: [] });
+                const result: ProjectConsultantOutput = await projectConsultant({ history: [], language });
                 const assistantMessage: ChatMessage = { role: 'model', parts: [{ text: result.reply }] };
                 setConversation(prev => [...prev, assistantMessage]);
                 setDisplayConversation(prev => [...prev, { role: 'assistant', content: result.reply }]);
@@ -71,7 +71,7 @@ export function Summarizer() {
     };
 
     initiateConversation();
-  }, [isInitiated, t.summarizer.error, toast]);
+  }, [isInitiated, t.summarizer.error, toast, language]);
 
 
   useEffect(() => {
@@ -101,7 +101,8 @@ export function Summarizer() {
             .filter(m => m.role === 'user' || m.role === 'model');
 
         const result: ProjectConsultantOutput = await projectConsultant({
-            history: historyForApi
+            history: historyForApi,
+            language
         });
 
       const assistantMessage: ChatMessage = { role: 'model', parts: [{ text: result.reply }] };
