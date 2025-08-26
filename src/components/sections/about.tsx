@@ -13,6 +13,13 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 import type { Skill } from '@/lib/types';
 
 export function About() {
@@ -46,31 +53,43 @@ export function About() {
         </div>
         <div className="mt-16">
             <h3 className="font-headline text-2xl md:text-3xl font-bold text-center mb-8">{t.about.skills.title}</h3>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-              {t.about.skills.list.map((skill: Skill) => (
-                <Dialog key={skill.name}>
-                  <DialogTrigger asChild>
-                    <Card className="text-center p-4 transition-transform hover:scale-105 bg-background cursor-pointer h-full">
-                      <CardContent className="flex flex-col items-center justify-center gap-2 h-full">
-                        <skill.icon className="h-10 w-10 text-primary" />
-                        <span className="font-semibold">{skill.name}</span>
-                      </CardContent>
-                    </Card>
-                  </DialogTrigger>
-                  <DialogContent>
-                    <DialogHeader>
-                      <DialogTitle className="flex items-center gap-3 font-headline text-2xl">
-                        <skill.icon className="h-8 w-8 text-primary" />
-                        {skill.name}
-                      </DialogTitle>
-                      <DialogDescription className="pt-4 text-base">
-                        {language === 'es' ? skill.description_es : skill.description_en}
-                      </DialogDescription>
-                    </DialogHeader>
-                  </DialogContent>
-                </Dialog>
-              ))}
-            </div>
+            <Carousel
+              opts={{
+                align: "start",
+                loop: true,
+              }}
+              className="w-full max-w-sm sm:max-w-xl md:max-w-2xl lg:max-w-4xl xl:max-w-6xl mx-auto"
+            >
+              <CarouselContent>
+                {t.about.skills.list.map((skill: Skill) => (
+                  <CarouselItem key={skill.name} className="basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5 p-2">
+                     <Dialog>
+                      <DialogTrigger asChild>
+                        <Card className="text-center p-4 transition-transform hover:scale-105 bg-background cursor-pointer h-full">
+                          <CardContent className="flex flex-col items-center justify-center gap-2 h-full p-0">
+                            <skill.icon className="h-10 w-10 text-primary" />
+                            <span className="font-semibold text-sm">{skill.name}</span>
+                          </CardContent>
+                        </Card>
+                      </DialogTrigger>
+                      <DialogContent>
+                        <DialogHeader>
+                          <DialogTitle className="flex items-center gap-3 font-headline text-2xl">
+                            <skill.icon className="h-8 w-8 text-primary" />
+                            {skill.name}
+                          </DialogTitle>
+                          <DialogDescription className="pt-4 text-base">
+                            {language === 'es' ? skill.description_es : skill.description_en}
+                          </DialogDescription>
+                        </DialogHeader>
+                      </DialogContent>
+                    </Dialog>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="hidden md:flex" />
+              <CarouselNext className="hidden md:flex" />
+            </Carousel>
         </div>
       </div>
     </section>
