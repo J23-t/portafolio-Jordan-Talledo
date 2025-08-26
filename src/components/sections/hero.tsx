@@ -10,7 +10,7 @@ export function Hero() {
   const { t } = useLanguage();
 
   return (
-    <section id="home" className="relative w-full h-[80vh] min-h-[600px] flex items-center justify-center text-white overflow-hidden">
+    <section id="home" className="relative w-full h-[80vh] min-h-[600px] flex items-center justify-center text-white overflow-hidden animate-fade-in">
         <div className="absolute inset-0 z-0">
              <Image
                 src="https://picsum.photos/1920/1080"
@@ -22,7 +22,7 @@ export function Hero() {
             />
             <div className="absolute inset-0 bg-black/60"></div>
         </div>
-        <div className="relative z-10 container mx-auto px-4 md:px-6 text-center space-y-6">
+        <div className="relative z-10 container mx-auto px-4 md:px-6 text-center space-y-6 animate-slide-in-from-bottom">
             <h1 className="font-headline text-4xl md:text-6xl font-bold tracking-tight">
                 {t.hero.title}
             </h1>

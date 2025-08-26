@@ -8,7 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui
 export function Scheduling() {
   const { t } = useLanguage();
   return (
-    <section id="scheduling" className="py-16 md:py-24 bg-secondary">
+    <section id="scheduling" className="py-16 md:py-24 bg-secondary animate-fade-in-up">
       <div className="container mx-auto px-4 md:px-6">
         <Card className="max-w-3xl mx-auto text-center">
             <CardHeader>
