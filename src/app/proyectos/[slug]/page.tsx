@@ -1,98 +1,55 @@
-"use client";
 
-import { useParams, notFound } from 'next/navigation';
-import Image from 'next/image';
-import Link from 'next/link';
-import { useLanguage } from '@/contexts/language-context';
+import { notFound } from 'next/navigation';
 import { projects } from '@/lib/data';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { ChevronRight, ExternalLink, Home } from 'lucide-react';
+import { content } from '@/lib/content';
+import { Metadata, ResolvingMetadata } from 'next';
+import ProjectDetailClient from './project-detail-client';
 
-export default function ProjectDetailPage() {
-  const { slug } = useParams();
-  const { t, language } = useLanguage();
+type Props = {
+  params: { slug: string }
+  searchParams: { [key: string]: string | string[] | undefined }
+}
 
+export async function generateMetadata(
+  { params }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const slug = params.slug;
   const project = projects.find((p) => p.slug === slug);
 
   if (!project) {
-    // In a real app, you might want to redirect to a 404 page.
-    // For now, we'll just return a simple message.
-    // In server components, you would use the `notFound()` function from `next/navigation`.
-    return (
-        <div className="container mx-auto px-4 md:px-6 py-16 text-center">
-            <h1 className="text-4xl font-bold mb-4">Project Not Found</h1>
-            <p className="text-muted-foreground mb-8">The project you are looking for does not exist.</p>
-            <Button asChild>
-                <Link href="/">
-                    <Home className="mr-2 h-4 w-4"/>
-                    Return Home
-                </Link>
-            </Button>
-        </div>
-    );
+    return {
+      title: 'Project Not Found',
+    }
   }
 
-  const description = language === 'es' ? project.description_es : project.description_en;
+  // Optionally access parent metadata
+  const previousImages = (await parent).openGraph?.images || []
 
-  return (
-    <div className="animate-fade-in">
-        <div className="container mx-auto px-4 md:px-6 py-8">
-            <nav className="flex items-center text-sm text-muted-foreground mb-8">
-                <Link href="/" className="hover:text-primary transition-colors">
-                    Home
-                </Link>
-                <ChevronRight className="h-4 w-4 mx-1" />
-                <Link href="/#projects" className="hover:text-primary transition-colors">
-                    {t.nav.projects}
-                </Link>
-                <ChevronRight className="h-4 w-4 mx-1" />
-                <span className="font-medium text-foreground">{project.title}</span>
-            </nav>
+  return {
+    title: `${project.title} | Jordan Talledo Projects`,
+    description: content.es.projects.list.find(p => p.slug === slug)?.description_es || project.description_en,
+    openGraph: {
+      title: `${project.title} | Jordan Talledo`,
+      description: content.es.projects.list.find(p => p.slug === slug)?.description_es || project.description_en,
+      images: [project.imageUrl, ...previousImages],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${project.title} | Jordan Talledo`,
+      description: content.es.projects.list.find(p => p.slug === slug)?.description_es || project.description_en,
+      images: [project.imageUrl],
+    },
+  }
+}
 
-            <article className="max-w-4xl mx-auto">
-                <header className="mb-8">
-                    <h1 className="font-headline text-4xl md:text-5xl font-bold text-primary mb-4">
-                        {project.title}
-                    </h1>
-                    <p className="text-xl text-muted-foreground">
-                        {description}
-                    </p>
-                </header>
-                
-                <div className="aspect-video relative rounded-lg overflow-hidden shadow-lg mb-8 bg-muted">
-                    <Image
-                        src={project.imageUrl}
-                        alt={project.title}
-                        fill
-                        className="object-cover"
-                        data-ai-hint="project screenshot"
-                        priority
-                    />
-                </div>
+export default function ProjectDetailPage({ params }: Props) {
+  const { slug } = params;
+  const project = projects.find((p) => p.slug === slug);
 
-                <div className="bg-secondary/50 p-6 rounded-lg mb-8">
-                    <h3 className="font-headline text-2xl font-semibold mb-4">{language === 'es' ? 'Tecnologías Utilizadas' : 'Technologies Used'}</h3>
-                    <div className="flex flex-wrap gap-3">
-                    {project.technologies.map((tech) => (
-                        <Badge key={tech} variant="default" className="text-lg py-1 px-4 rounded-full">
-                            {tech}
-                        </Badge>
-                    ))}
-                    </div>
-                </div>
+  if (!project) {
+    notFound();
+  }
 
-                <div className="text-center">
-                    <Button asChild size="lg">
-                        <a href={project.link} target="_blank" rel="noopener noreferrer">
-                            <ExternalLink className="mr-2 h-5 w-5" />
-                            {language === 'es' ? 'Visitar el Sitio Web' : 'Visit Website'}
-                        </a>
-                    </Button>
-                </div>
-            </article>
-
-        </div>
-    </div>
-  );
+  return <ProjectDetailClient project={project} />;
 }
