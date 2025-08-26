@@ -45,7 +45,9 @@ export function Summarizer() {
             setIsInitiated(true);
             try {
                 const result: ProjectConsultantOutput = await projectConsultant({ history: [], language });
-                setConversation(prev => [...prev, { role: 'assistant', content: result.reply }]);
+                if (result && result.reply) {
+                    setConversation(prev => [...prev, { role: 'assistant', content: result.reply }]);
+                }
             } catch (error) {
                 console.error(error);
                 toast({
@@ -75,22 +77,20 @@ export function Summarizer() {
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     setIsLoading(true);
     
-    const currentConversation: DisplayMessage[] = [...conversation, { role: 'user', content: data.prompt }];
+    const userMessage: DisplayMessage = { role: 'user', content: data.prompt };
+    const currentConversation: DisplayMessage[] = [...conversation, userMessage];
     setConversation(currentConversation);
     form.reset();
 
-    const historyForApi = currentConversation.map(m => ({
-        role: m.role === 'assistant' ? 'model' : 'user',
-        content: m.content
-    }));
-
     try {
         const result: ProjectConsultantOutput = await projectConsultant({
-            history: historyForApi,
+            history: currentConversation,
             language
         });
-
-      setConversation(prev => [...prev, { role: 'assistant', content: result.reply }]);
+      
+      if (result && result.reply) {
+        setConversation(prev => [...prev, { role: 'assistant', content: result.reply }]);
+      }
 
     } catch (error) {
       console.error(error);
@@ -159,7 +159,7 @@ export function Summarizer() {
                                 </div>
                             ))
                         )}
-                         {isLoading && (
+                         {isLoading && conversation.length > 0 && conversation.at(-1)?.role === 'user' && (
                             <div className="flex items-start gap-4">
                                 <div className="p-2 rounded-full bg-primary/20 text-primary shrink-0">
                                     <Bot className="h-6 w-6" />
