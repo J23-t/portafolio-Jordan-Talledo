@@ -8,7 +8,7 @@ export function Services() {
   const { t } = useLanguage();
 
   return (
-    <section id="services" className="py-16 md:py-24 bg-background animate-fade-in-up">
+    <section id="services" className="py-16 md:py-24 bg-background animate-slide-in-from-bottom-blur">
       <div className="container mx-auto px-4 md:px-6">
         <div className="text-center mb-12">
           <h2 className="font-headline text-3xl md:text-4xl font-bold text-primary">{t.services.title}</h2>

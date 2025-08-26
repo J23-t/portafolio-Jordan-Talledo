@@ -23,7 +23,7 @@ export function Testimonials() {
   );
 
   return (
-    <section id="testimonials" className="py-16 md:py-24 bg-secondary animate-fade-in-up">
+    <section id="testimonials" className="py-16 md:py-24 bg-secondary animate-slide-in-from-bottom-blur">
       <div className="container mx-auto px-4 md:px-6">
         <div className="text-center mb-12">
           <h2 className="font-headline text-3xl md:text-4xl font-bold text-primary">{t.testimonials.title}</h2>
