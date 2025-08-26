@@ -115,6 +115,11 @@ export interface Content {
             success: {
                 title: string;
                 description: string;
+                resetButton: string;
+            },
+            error: {
+                title: string;
+                description: string;
             },
             validation: {
                 name: string;

@@ -206,7 +206,12 @@ export const content: ContentData = {
             submit: 'Enviar Mensaje',
             success: {
                 title: '¡Mensaje Enviado!',
-                description: 'Gracias por tu mensaje. Te responderé pronto.',
+                description: 'Gracias por ponerte en contacto. He recibido tu mensaje y te responderé a la brevedad.',
+                resetButton: 'Enviar otro mensaje',
+            },
+            error: {
+                title: 'Error al Enviar',
+                description: 'No se pudo enviar el mensaje. Por favor, inténtalo más tarde.',
             },
             validation: {
                 name: 'El nombre debe tener al menos 2 caracteres.',
@@ -319,7 +324,12 @@ export const content: ContentData = {
             submit: 'Send Message',
             success: {
                 title: 'Message Sent!',
-                description: 'Thank you for your message. I will get back to you soon.',
+                description: 'Thank you for getting in touch. I have received your message and will get back to you shortly.',
+                resetButton: 'Send another message',
+            },
+            error: {
+                title: 'Sending Error',
+                description: 'Could not send the message. Please try again later.',
             },
             validation: {
                 name: 'Name must be at least 2 characters.',
