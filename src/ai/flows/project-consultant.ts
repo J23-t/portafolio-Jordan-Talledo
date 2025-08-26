@@ -38,7 +38,6 @@ const ProjectConsultantInputSchema = z.object({
       role: z.enum(['user', 'model', 'tool']),
       parts: z.array(z.object({
           text: z.string().optional(),
-          // Add other possible part types if necessary, like toolRequest, toolResponse
       }).passthrough())
   })).describe('The conversation history'),
   language: z.enum(['es', 'en']).describe('The language the assistant should respond in.')
@@ -86,7 +85,7 @@ const projectConsultantFlow = ai.defineFlow(
     const cleanHistory: Message[] = input.history
       .map(m => ({
           role: m.role as 'user' | 'model' | 'tool',
-          parts: m.parts.filter(p => typeof p.text === 'string' && p.text.trim() !== '')
+          parts: m.parts.filter(p => p && typeof p.text === 'string' && p.text.trim() !== '')
       }))
       .filter(m => m.parts.length > 0);
 
