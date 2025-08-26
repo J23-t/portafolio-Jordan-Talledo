@@ -4,7 +4,7 @@ import Image from 'next/image';
 import * as React from 'react';
 import { useLanguage } from '@/contexts/language-context';
 import { Button } from '@/components/ui/button';
-import { Download } from 'lucide-react';
+import { Download, ExternalLink } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import {
   Dialog,
@@ -14,7 +14,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import type { Skill } from '@/lib/types';
+import type { Project, Skill } from '@/lib/types';
+import { Badge } from '../ui/badge';
 
 
 export function About() {
@@ -49,29 +50,54 @@ export function About() {
         <div className="mt-16">
             <h3 className="font-headline text-2xl md:text-3xl font-bold text-center mb-8">{t.about.skills.title}</h3>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-                {t.about.skills.list.map((skill: Skill) => (
-                  <Dialog key={skill.name}>
-                    <DialogTrigger asChild>
-                      <Card className="text-center p-4 transition-transform hover:scale-105 bg-background cursor-pointer h-full">
-                        <CardContent className="flex flex-col items-center justify-center gap-2 h-full p-0">
-                          <skill.icon className="h-10 w-10 text-primary" />
-                          <span className="font-semibold text-sm">{skill.name}</span>
-                        </CardContent>
-                      </Card>
-                    </DialogTrigger>
-                    <DialogContent>
-                      <DialogHeader>
-                        <DialogTitle className="flex items-center gap-3 font-headline text-2xl">
-                          <skill.icon className="h-8 w-8 text-primary" />
-                          {skill.name}
-                        </DialogTitle>
-                        <DialogDescription className="pt-4 text-base">
-                          {language === 'es' ? skill.description_es : skill.description_en}
-                        </DialogDescription>
-                      </DialogHeader>
-                    </DialogContent>
-                  </Dialog>
-                ))}
+                {t.about.skills.list.map((skill: Skill) => {
+                  const projectsWithSkill = t.projects.list.filter((project: Project) => 
+                    project.technologies.includes(skill.name)
+                  );
+
+                  return (
+                    <Dialog key={skill.name}>
+                      <DialogTrigger asChild>
+                        <Card className="text-center p-4 transition-transform hover:scale-105 bg-background cursor-pointer h-full">
+                          <CardContent className="flex flex-col items-center justify-center gap-2 h-full p-0">
+                            <skill.icon className="h-10 w-10 text-primary" />
+                            <span className="font-semibold text-sm">{skill.name}</span>
+                          </CardContent>
+                        </Card>
+                      </DialogTrigger>
+                      <DialogContent className="max-w-md">
+                        <DialogHeader>
+                          <DialogTitle className="flex items-center gap-3 font-headline text-2xl">
+                            <skill.icon className="h-8 w-8 text-primary" />
+                            {skill.name}
+                          </DialogTitle>
+                          <DialogDescription className="pt-4 text-base text-left">
+                            {language === 'es' ? skill.description_es : skill.description_en}
+                          </DialogDescription>
+                        </DialogHeader>
+                        {projectsWithSkill.length > 0 && (
+                          <div className="mt-4">
+                            <h4 className="font-semibold mb-3 text-lg">{language === 'es' ? 'Proyectos Relevantes' : 'Relevant Projects'}</h4>
+                            <div className="space-y-2">
+                              {projectsWithSkill.map((project: Project) => (
+                                <a
+                                  key={project.title}
+                                  href={project.link}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="flex items-center justify-between p-2 rounded-md bg-secondary hover:bg-secondary/80 transition-colors"
+                                >
+                                  <span>{project.title}</span>
+                                  <ExternalLink className="h-4 w-4 text-muted-foreground" />
+                                </a>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </DialogContent>
+                    </Dialog>
+                  );
+                })}
               </div>
         </div>
       </div>
