@@ -22,6 +22,24 @@ const skills = [
         description_en: 'Google\'s UI toolkit for building natively compiled applications for mobile, web, and desktop from a single codebase.'
     },
     { 
+        name: 'Dart', 
+        icon: Code,
+        description_es: 'Un lenguaje de programación optimizado para clientes para crear aplicaciones rápidas en cualquier plataforma. Es el lenguaje detrás de Flutter.',
+        description_en: 'A client-optimized programming language for building fast apps on any platform. It is the language behind Flutter.'
+    },
+    { 
+        name: 'Vue.js', 
+        icon: Code,
+        description_es: 'Un framework de JavaScript progresivo para construir interfaces de usuario. Es conocido por su enfoque incremental y su facilidad de integración.',
+        description_en: 'A progressive JavaScript framework for building user interfaces. It is known for its incremental approach and ease of integration.'
+    },
+    { 
+        name: 'Node.js', 
+        icon: Server,
+        description_es: 'Entorno de ejecución de JavaScript del lado del servidor que permite construir aplicaciones de red escalables y rápidas.',
+        description_en: 'A server-side JavaScript runtime environment that allows for building scalable and fast network applications.'
+    },
+    { 
         name: 'JavaScript', 
         icon: Code,
         description_es: 'El lenguaje de programación fundamental para la web, esencial para crear sitios interactivos y dinámicos.',
@@ -70,10 +88,22 @@ const skills = [
         description_en: 'Microsoft\'s relational database management system, used for storing and retrieving data in enterprise applications.'
     },
     { 
+        name: 'MySQL', 
+        icon: Database,
+        description_es: 'Uno de los sistemas de gestión de bases de datos relacionales de código abierto más populares del mundo, conocido por su fiabilidad y rendimiento.',
+        description_en: 'One of the world\'s most popular open-source relational database management systems, known for its reliability and performance.'
+    },
+    { 
         name: 'MongoDB', 
         icon: Database,
         description_es: 'Base de datos NoSQL orientada a documentos, conocida por su flexibilidad y escalabilidad para aplicaciones modernas.',
         description_en: 'A document-oriented NoSQL database known for its flexibility and scalability for modern applications.'
+    },
+    { 
+        name: 'Firebase Firestore', 
+        icon: Database,
+        description_es: 'Base de datos de documentos NoSQL flexible y escalable para el desarrollo móvil, web y de servidores de Firebase y Google Cloud.',
+        description_en: 'A flexible, scalable NoSQL document database for mobile, web, and server development from Firebase and Google Cloud.'
     },
     { 
         name: 'Git', 
