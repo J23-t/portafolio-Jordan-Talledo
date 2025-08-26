@@ -22,7 +22,8 @@ export async function generateMetadata(
     }
   }
 
-  const projectDescription = content.es.projects.list.find(p => p.slug === slug)?.description_es || project.description_en;
+  // Determine description based on a default language or check existence
+  const projectDescription = project.description_es || project.description_en;
   
   // Optionally access parent metadata
   const previousImages = (await parent).openGraph?.images || []
