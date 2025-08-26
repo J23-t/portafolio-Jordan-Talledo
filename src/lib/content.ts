@@ -192,7 +192,7 @@ export const content: ContentData = {
         imageAlt: 'Foto de perfil de Jordan Talledo',
         cv: {
             label: 'Descargar CV',
-            url: '/jordan_talledo_cv.pdf',
+            url: '/TALLEDO SALAZAR JORDAN ENRIQUE - CV 2025.pdf',
         },
         skills: {
             title: 'Habilidades Técnicas',
@@ -310,7 +310,7 @@ export const content: ContentData = {
         imageAlt: 'Profile picture of Jordan Talledo',
         cv: {
             label: 'Download CV',
-            url: '/jordan_talledo_cv.pdf',
+            url: '/TALLEDO SALAZAR JORDAN ENRIQUE - CV 2025.pdf',
         },
         skills: {
             title: 'Technical Skills',
