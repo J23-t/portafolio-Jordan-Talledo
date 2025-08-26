@@ -21,7 +21,7 @@ export async function generateMetadata(
     }
   }
 
-  const projectDescription = project.description_es || project.description_en;
+  const projectDescription = project.description_es;
   
   const previousImages = (await parent).openGraph?.images || []
 
