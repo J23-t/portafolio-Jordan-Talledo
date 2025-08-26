@@ -1,4 +1,3 @@
-
 "use client";
 
 import Image from 'next/image';
@@ -6,7 +5,7 @@ import Link from 'next/link';
 import { useLanguage } from '@/contexts/language-context';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { ChevronRight, ExternalLink, Home } from 'lucide-react';
+import { ChevronRight, ExternalLink } from 'lucide-react';
 import type { Project } from '@/lib/types';
 
 interface ProjectDetailClientProps {

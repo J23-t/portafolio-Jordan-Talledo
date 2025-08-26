@@ -7,7 +7,6 @@ import ProjectDetailClient from './project-detail-client';
 
 type Props = {
   params: { slug: string }
-  searchParams: { [key: string]: string | string[] | undefined }
 }
 
 export async function generateMetadata(
@@ -23,21 +22,23 @@ export async function generateMetadata(
     }
   }
 
+  const projectDescription = content.es.projects.list.find(p => p.slug === slug)?.description_es || project.description_en;
+  
   // Optionally access parent metadata
   const previousImages = (await parent).openGraph?.images || []
 
   return {
     title: `${project.title} | Jordan Talledo Projects`,
-    description: content.es.projects.list.find(p => p.slug === slug)?.description_es || project.description_en,
+    description: projectDescription,
     openGraph: {
       title: `${project.title} | Jordan Talledo`,
-      description: content.es.projects.list.find(p => p.slug === slug)?.description_es || project.description_en,
+      description: projectDescription,
       images: [project.imageUrl, ...previousImages],
     },
     twitter: {
       card: 'summary_large_image',
       title: `${project.title} | Jordan Talledo`,
-      description: content.es.projects.list.find(p => p.slug === slug)?.description_es || project.description_en,
+      description: projectDescription,
       images: [project.imageUrl],
     },
   }
