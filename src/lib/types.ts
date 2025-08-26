@@ -29,6 +29,7 @@ export interface Testimonial {
 }
 
 export interface Content {
+    language?: 'es' | 'en';
     nav: {
         about: string;
         services: string;
@@ -133,6 +134,8 @@ export interface Content {
         github: string;
         linkedin: string;
         twitter: string;
+        email: string;
+        phone: string;
     };
     footer: {
         copyright: string;

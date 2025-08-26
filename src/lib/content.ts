@@ -20,8 +20,8 @@ const skills = [
 const projects = [
     {
       title: 'Amoblarq',
-      description_es: 'Plataforma de comercio electrónico para una empresa de mueblería, con catálogo de productos y carrito de compras.',
-      description_en: 'E-commerce platform for a furniture company, with product catalog and shopping cart.',
+      description_es: 'Página web para una empresa de mueblería, con un catálogo de productos y funcionalidades de comercio electrónico.',
+      description_en: 'Website for a furniture company, with a product catalog and e-commerce functionalities.',
       technologies: ['Next.js', 'Tailwind CSS', 'MongoDB'],
       imageUrl: 'https://picsum.photos/600/401',
       link: 'https://amoblarq.vercel.app/',
@@ -29,17 +29,17 @@ const projects = [
     },
     {
       title: 'Ferrefast',
-      description_es: 'Página web para una ferretería, con catálogo de productos y funcionalidades para cotizaciones.',
-      description_en: 'Website for a hardware store, with a product catalog and quotation functionalities.',
+      description_es: 'Página web para una ferretería, incluyendo un catálogo de productos y sistema para realizar cotizaciones.',
+      description_en: 'Website for a hardware store, including a product catalog and a system for generating quotes.',
       technologies: ['Next.js', 'Tailwind CSS', 'Firebase'],
       imageUrl: 'https://picsum.photos/600/402',
       link: 'https://ferrefastoficial.vercel.app/',
       category: 'web',
     },
     {
-      title: 'Asistencia AOF',
-      description_es: 'Aplicación para controlar y verificar la asistencia de los trabajadores de una empresa.',
-      description_en: 'Application to control and verify the attendance of a company\'s workers.',
+      title: 'Asistencialoficial',
+      description_es: 'Aplicación web diseñada para controlar y verificar la asistencia de los trabajadores de una empresa.',
+      description_en: 'Web application designed to control and verify the attendance of a company\'s employees.',
       technologies: ['React', 'Node.js', 'SQL Server'],
       imageUrl: 'https://picsum.photos/600/403',
       link: 'https://asistencialoficial.netlify.app/',
@@ -47,8 +47,8 @@ const projects = [
     },
     {
         title: 'Extractor de Datos IQ',
-        description_es: 'Herramienta para extraer datos de productos desde la página web elegida por el cliente.',
-        description_en: 'A tool to extract product data from the website chosen by the client.',
+        description_es: 'Herramienta que extrae datos de productos desde sitios web seleccionados por el cliente para un catálogo.',
+        description_en: 'A tool that extracts product data from websites selected by the client for a catalog.',
         technologies: ['Next.js', 'Puppeteer', 'Tailwind CSS'],
         imageUrl: 'https://picsum.photos/600/404',
         link: 'https://extractordedatos.vercel.app/',
@@ -89,15 +89,15 @@ export const content: ContentData = {
         contact: 'Contacto',
     },
     hero: {
-        title: 'Soy Jordan Talledo, desarrollador web y móvil',
-        subtitle: 'Innovación, código limpio y soluciones tecnológicas personalizadas.',
+        title: 'Jordan Enrique Talledo Salazar',
+        subtitle: 'Desarrollador de Aplicaciones Móviles y Sitios Web. Innovación, código limpio y soluciones tecnológicas personalizadas.',
         imageAlt: 'Imagen de un desarrollador trabajando en su laptop',
         ctaContact: 'Contáctame',
-        ctaProjects: 'Ver mis proyectos',
+        ctaProjects: 'Ver Proyectos',
     },
     about: {
-        title: 'Sobre mí',
-        bio: 'Soy un apasionado desarrollador de software con una sólida experiencia en la creación de aplicaciones móviles y sitios web de alto rendimiento. Mi enfoque se centra en escribir código limpio y escalable, y en utilizar las últimas tecnologías para construir soluciones eficientes y personalizadas que aporten valor real a mis clientes.',
+        title: 'Sobre Mí',
+        bio: 'Soy un desarrollador de software con una sólida trayectoria en la creación de aplicaciones móviles y sitios web de alto rendimiento. Mi filosofía de trabajo se basa en escribir código limpio, escalable y utilizar las últimas tecnologías para construir soluciones eficientes y personalizadas que aporten valor real.',
         imageAlt: 'Foto de perfil de Jordan Talledo',
         cv: {
             label: 'Descargar CV',
@@ -109,18 +109,18 @@ export const content: ContentData = {
         }
     },
     services: {
-        title: 'Servicios que ofrezco',
-        subtitle: 'Desde aplicaciones móviles nativas hasta complejas plataformas web, ofrezco un abanico de soluciones para llevar tu idea al siguiente nivel.',
+        title: 'Servicios',
+        subtitle: 'Ofrezco una gama de soluciones para llevar tu proyecto al siguiente nivel, desde aplicaciones móviles nativas hasta complejas plataformas web.',
         list: [
-            { title: 'Desarrollo de Apps Móviles', description: 'Creación de aplicaciones nativas para Android (Kotlin) e híbridas (Flutter) de alto rendimiento.', icon: Smartphone },
-            { title: 'Desarrollo Web', description: 'Desarrollo de sitios y aplicaciones web modernas y responsivas con Next.js y las últimas tecnologías.', icon: Code },
-            { title: 'Consultoría de Arquitectura', description: 'Asesoramiento en la definición de arquitecturas de software robustas y escalables para tus proyectos.', icon: Cog },
-            { title: 'Mantenimiento y Optimización', description: 'Servicios de mantenimiento, optimización de rendimiento y actualización de sitios y aplicaciones existentes.', icon: Server },
+            { title: 'Desarrollo de Apps Móviles', description: 'Creación de aplicaciones nativas para Android (Kotlin) e híbridas (Flutter) de alto rendimiento y excelente experiencia de usuario.', icon: Smartphone },
+            { title: 'Desarrollo Web', description: 'Desarrollo de sitios y aplicaciones web modernas, responsivas y optimizadas con Next.js y las últimas tecnologías del ecosistema.', icon: Code },
+            { title: 'Consultoría de Arquitectura', description: 'Asesoramiento para definir arquitecturas de software robustas, escalables y seguras para tus proyectos tecnológicos.', icon: Cog },
+            { title: 'Mantenimiento y Optimización', description: 'Servicios de mantenimiento, optimización de rendimiento y actualización de sitios y aplicaciones existentes para asegurar su vigencia.', icon: Server },
         ]
     },
     projects: {
-        title: 'Mis Proyectos',
-        subtitle: 'Aquí hay una selección de algunos de los proyectos en los que he trabajado. Cada uno representa un desafío único y una oportunidad para crecer.',
+        title: 'Proyectos Destacados',
+        subtitle: 'Una selección de proyectos que demuestran mi experiencia en el desarrollo de soluciones web y móviles.',
         filters: {
             all: 'Todos',
             mobile: 'Apps Móviles',
@@ -151,9 +151,9 @@ export const content: ContentData = {
         }
     },
     scheduling: {
-        title: '¿Hablamos de tu proyecto?',
-        subtitle: 'Estoy disponible para discutir tus ideas y cómo puedo ayudarte a hacerlas realidad.',
-        buttonText: 'Agendar una reunión',
+        title: 'Agendar una Cita',
+        subtitle: '¿Listo para discutir tu proyecto? Agenda una reunión conmigo para explorar cómo puedo ayudarte a alcanzar tus objetivos.',
+        buttonText: 'Agendar Reunión',
         calendlyUrl: 'https://calendly.com',
     },
     testimonials: {
@@ -163,18 +163,18 @@ export const content: ContentData = {
     },
     contact: {
         title: 'Contacto',
-        subtitle: '¿Tienes una pregunta o una propuesta? No dudes en contactarme.',
+        subtitle: '¿Tienes una pregunta o una propuesta de proyecto? No dudes en contactarme a través del formulario o por mis canales directos.',
         form: {
-            title: 'Envíame un mensaje',
-            description: 'Completa el formulario y te responderé lo antes posible.',
+            title: 'Enviar un Mensaje',
+            description: 'Completa el formulario y te responderé a la brevedad posible.',
             name: 'Nombre',
             email: 'Correo electrónico',
             phone: 'Teléfono (Opcional)',
             message: 'Mensaje',
             submit: 'Enviar Mensaje',
             success: {
-                title: '¡Mensaje enviado!',
-                description: 'Gracias por contactarme. Te responderé pronto.',
+                title: '¡Mensaje Enviado!',
+                description: 'Gracias por tu mensaje. Te responderé pronto.',
             },
             validation: {
                 name: 'El nombre debe tener al menos 2 caracteres.',
@@ -184,16 +184,18 @@ export const content: ContentData = {
         },
         direct: {
             title: 'Contacto Directo',
-            description: 'También puedes encontrarme en estas plataformas.',
+            description: 'También puedes contactarme directamente a través de mi correo electrónico o teléfono.',
         },
     },
     social: {
         github: 'https://github.com/jordantalledo',
         linkedin: 'https://linkedin.com/in/jordan-enrique-talledo-salazar-924a55220',
-        twitter: 'https://twitter.com'
+        twitter: 'https://twitter.com',
+        email: 'programadortalledo@gmail.com',
+        phone: '+51977479152'
     },
     footer: {
-        copyright: 'Jordan Talledo. Todos los derechos reservados.',
+        copyright: 'Jordan Enrique Talledo Salazar. Todos los derechos reservados.',
     }
   },
   en: {
@@ -204,15 +206,15 @@ export const content: ContentData = {
         contact: 'Contact',
     },
     hero: {
-        title: "I'm Jordan Talledo, Web and Mobile Developer",
-        subtitle: 'Innovation, clean code, and custom technology solutions.',
+        title: "Jordan Enrique Talledo Salazar",
+        subtitle: 'Mobile Application and Website Developer. Innovation, clean code, and custom technology solutions.',
         imageAlt: 'Image of a developer working on his laptop',
         ctaContact: 'Contact Me',
-        ctaProjects: 'View My Projects',
+        ctaProjects: 'View Projects',
     },
     about: {
         title: 'About Me',
-        bio: "I am a passionate software developer with solid experience in creating high-performance mobile applications and websites. My focus is on writing clean, scalable code and using the latest technologies to build efficient, custom solutions that bring real value to my clients.",
+        bio: "I am a software developer with a solid track record in creating high-performance mobile applications and websites. My work philosophy is based on writing clean, scalable code and using the latest technologies to build efficient, custom solutions that deliver real value.",
         imageAlt: 'Profile picture of Jordan Talledo',
         cv: {
             label: 'Download CV',
@@ -224,18 +226,18 @@ export const content: ContentData = {
         }
     },
     services: {
-        title: 'Services I Offer',
-        subtitle: 'From native mobile apps to complex web platforms, I offer a range of solutions to take your idea to the next level.',
+        title: 'Services',
+        subtitle: 'I offer a range of solutions to take your project to the next level, from native mobile apps to complex web platforms.',
         list: [
-            { title: 'Mobile App Development', description: 'Creation of high-performance native applications for Android (Kotlin) and hybrid (Flutter).', icon: Smartphone },
-            { title: 'Web Development', description: 'Development of modern and responsive websites and web applications with Next.js and the latest technologies.', icon: Code },
-            { title: 'Architecture Consulting', description: 'Advice on defining robust and scalable software architectures for your projects.', icon: Cog },
-            { title: 'Maintenance & Optimization', description: 'Maintenance, performance optimization, and updating services for existing sites and applications.', icon: Server },
+            { title: 'Mobile App Development', description: 'Creation of high-performance native applications for Android (Kotlin) and hybrid (Flutter) with excellent user experience.', icon: Smartphone },
+            { title: 'Web Development', description: 'Development of modern, responsive, and optimized websites and web applications with Next.js and the latest technologies in the ecosystem.', icon: Code },
+            { title: 'Architecture Consulting', description: 'Advice on defining robust, scalable, and secure software architectures for your technology projects.', icon: Cog },
+            { title: 'Maintenance & Optimization', description: 'Maintenance, performance optimization, and updating services for existing sites and applications to ensure they stay current.', icon: Server },
         ]
     },
     projects: {
-        title: 'My Projects',
-        subtitle: 'Here is a selection of some of the projects I have worked on. Each one represents a unique challenge and an opportunity for growth.',
+        title: 'Featured Projects',
+        subtitle: 'A selection of projects that demonstrate my experience in developing web and mobile solutions.',
         filters: {
             all: 'All',
             mobile: 'Mobile Apps',
@@ -266,9 +268,9 @@ export const content: ContentData = {
         }
     },
     scheduling: {
-        title: "Let's talk about your project",
-        subtitle: "I'm available to discuss your ideas and how I can help bring them to life.",
-        buttonText: 'Schedule a Meeting',
+        title: 'Schedule a Meeting',
+        subtitle: "Ready to discuss your project? Schedule a meeting with me to explore how I can help you achieve your goals.",
+        buttonText: 'Schedule Meeting',
         calendlyUrl: 'https://calendly.com',
     },
     testimonials: {
@@ -278,18 +280,18 @@ export const content: ContentData = {
     },
     contact: {
         title: 'Contact',
-        subtitle: 'Have a question or a proposal? Do not hesitate to contact me.',
+        subtitle: 'Do you have a question or a project proposal? Feel free to contact me through the form or my direct channels.',
         form: {
-            title: 'Send me a message',
-            description: 'Complete the form and I will get back to you as soon as possible.',
+            title: 'Send a Message',
+            description: 'Complete the form, and I will get back to you as soon as possible.',
             name: 'Name',
             email: 'Email',
             phone: 'Phone (Optional)',
             message: 'Message',
             submit: 'Send Message',
             success: {
-                title: 'Message sent!',
-                description: "Thanks for reaching out. I'll get back to you soon.",
+                title: 'Message Sent!',
+                description: 'Thank you for your message. I will get back to you soon.',
             },
             validation: {
                 name: 'Name must be at least 2 characters.',
@@ -299,16 +301,18 @@ export const content: ContentData = {
         },
         direct: {
             title: 'Direct Contact',
-            description: 'You can also find me on these platforms.',
+            description: 'You can also reach me directly via my email or phone.',
         },
     },
     social: {
         github: 'https://github.com/jordantalledo',
         linkedin: 'https://linkedin.com/in/jordan-enrique-talledo-salazar-924a55220',
-        twitter: 'https://twitter.com'
+        twitter: 'https://twitter.com',
+        email: 'programadortalledo@gmail.com',
+        phone: '+51977479152'
     },
     footer: {
-        copyright: 'Jordan Talledo. All rights reserved.',
+        copyright: 'Jordan Enrique Talledo Salazar. All rights reserved.',
     }
   }
 };

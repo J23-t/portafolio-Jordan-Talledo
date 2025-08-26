@@ -10,7 +10,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { useToast } from '@/hooks/use-toast';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
-import { Github, Linkedin, Send } from 'lucide-react';
+import { Mail, Phone, Send } from 'lucide-react';
 
 export function Contact() {
   const { t } = useLanguage();
@@ -77,16 +77,22 @@ export function Contact() {
                 <h3 className="font-headline text-2xl font-bold">{t.contact.direct.title}</h3>
                 <p className="text-muted-foreground">{t.contact.direct.description}</p>
                 <div className="space-y-4">
-                    <Button asChild variant="outline" size="lg" className="w-full justify-start">
-                        <a href={t.social.linkedin} target="_blank" rel="noopener noreferrer">
-                            <Linkedin className="mr-4 h-6 w-6 text-primary" />
-                            <span>LinkedIn</span>
+                    <Button asChild variant="outline" size="lg" className="w-full justify-start text-left">
+                        <a href={`mailto:${t.social.email}`}>
+                            <Mail className="mr-4 h-6 w-6 text-primary" />
+                            <div className="flex flex-col">
+                                <span>{t.social.email}</span>
+                                <span className="text-xs text-muted-foreground">{t.language === 'es' ? 'Correo Electrónico' : 'Email'}</span>
+                            </div>
                         </a>
                     </Button>
-                    <Button asChild variant="outline" size="lg" className="w-full justify-start">
-                        <a href={t.social.github} target="_blank" rel="noopener noreferrer">
-                            <Github className="mr-4 h-6 w-6" />
-                            <span>GitHub</span>
+                    <Button asChild variant="outline" size="lg" className="w-full justify-start text-left">
+                         <a href={`tel:${t.social.phone}`}>
+                            <Phone className="mr-4 h-6 w-6 text-primary" />
+                            <div className="flex flex-col">
+                                <span>{t.social.phone}</span>
+                                <span className="text-xs text-muted-foreground">{t.language === 'es' ? 'Teléfono' : 'Phone'}</span>
+                            </div>
                         </a>
                     </Button>
                 </div>
