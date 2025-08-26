@@ -13,7 +13,6 @@ export interface Service {
 
 export interface Project {
     title: string;
-    description: string;
     description_es: string;
     description_en: string;
     technologies: string[];
@@ -69,7 +68,7 @@ export interface Content {
             mobile: string;
             web: string;
         };
-        list: Project[];
+        list: (Omit<Project, 'description'>)[];
     };
     summarizer: {
         title: string;

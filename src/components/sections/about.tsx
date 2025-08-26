@@ -17,7 +17,7 @@ export function About() {
           <div className="flex justify-center">
             <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden shadow-2xl border-4 border-primary">
               <Image
-                src="https://picsum.photos/400/400"
+                src="https://picsum.photos/400/400?random=10"
                 alt={t.about.imageAlt}
                 fill
                 className="object-cover"
@@ -40,7 +40,7 @@ export function About() {
             <h3 className="font-headline text-2xl md:text-3xl font-bold text-center mb-8">{t.about.skills.title}</h3>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
               {t.about.skills.list.map((skill: Skill) => (
-                <Card key={skill.name} className="text-center p-4 transition-transform hover:scale-105">
+                <Card key={skill.name} className="text-center p-4 transition-transform hover:scale-105 bg-background">
                   <CardContent className="flex flex-col items-center justify-center gap-2">
                     <skill.icon className="h-10 w-10 text-primary" />
                     <span className="font-semibold">{skill.name}</span>

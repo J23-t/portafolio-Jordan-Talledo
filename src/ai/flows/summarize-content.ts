@@ -1,9 +1,9 @@
 'use server';
 
 /**
- * @fileOverview AI-powered content summarization flow.
+ * @fileOverview AI-powered code analysis flow.
  *
- * - summarizeContent - A function that summarizes content based on user input (URL, article, or text).
+ * - summarizeContent - A function that analyzes code and suggests improvements.
  * - SummarizeContentInput - The input type for the summarizeContent function.
  * - SummarizeContentOutput - The return type for the summarizeContent function.
  */
@@ -12,12 +12,12 @@ import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 
 const SummarizeContentInputSchema = z.object({
-  content: z.string().describe('The content to summarize (URL, article text, etc.)'),
+  content: z.string().describe('The code snippet to analyze'),
 });
 export type SummarizeContentInput = z.infer<typeof SummarizeContentInputSchema>;
 
 const SummarizeContentOutputSchema = z.object({
-  summary: z.string().describe('A summary of the content, focusing on relevance to Jordan Talledo\'s expertise.'),
+  summary: z.string().describe('An explanation of the code and suggestions for optimization.'),
 });
 export type SummarizeContentOutput = z.infer<typeof SummarizeContentOutputSchema>;
 
@@ -29,7 +29,15 @@ const summarizeContentPrompt = ai.definePrompt({
   name: 'summarizeContentPrompt',
   input: {schema: SummarizeContentInputSchema},
   output: {schema: SummarizeContentOutputSchema},
-  prompt: `You are an AI assistant tasked with summarizing content and identifying key takeaways relevant to Jordan Talledo, a developer with expertise in Next.js, Kotlin, Flutter, HTML, CSS, TypeScript, Tailwind CSS, SQL Server, and MongoDB.\n\n  Summarize the following content, focusing on aspects that highlight opportunities for Jordan Talledo's skills or potential services he could offer. The summary should be concise and informative for visitors to Jordan's portfolio.\n\n  Content: {{{content}}}`,
+  prompt: `You are an expert software developer and AI assistant. Your task is to analyze a code snippet, explain its functionality, and provide suggestions for improvement or optimization.
+
+Analyze the following code snippet:
+
+\`\`\`
+{{{content}}}
+\`\`\`
+
+Provide a clear explanation of what the code does, and then offer specific, actionable suggestions for how it could be improved (e.g., performance, readability, best practices).`,
 });
 
 const summarizeContentFlow = ai.defineFlow(

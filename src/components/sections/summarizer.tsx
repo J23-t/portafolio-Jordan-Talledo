@@ -13,15 +13,16 @@ import { useToast } from '@/hooks/use-toast';
 import { Bot, Loader2 } from 'lucide-react';
 import { useLanguage } from '@/contexts/language-context';
 
-const FormSchema = z.object({
-  content: z.string().min(50, { message: "El contenido debe tener al menos 50 caracteres." }),
-});
-
 export function Summarizer() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { toast } = useToast();
   const [summary, setSummary] = useState<SummarizeContentOutput | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+
+  const FormSchema = z.object({
+    content: z.string().min(50, { message: language === 'es' ? "El contenido debe tener al menos 50 caracteres." : "Content must be at least 50 characters." }),
+  });
+
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -47,14 +48,14 @@ export function Summarizer() {
   }
 
   return (
-    <section id="summarizer" className="py-16 md:py-24 bg-background">
+    <section id="summarizer" className="py-16 md:py-24 bg-secondary">
       <div className="container mx-auto px-4 md:px-6">
         <div className="text-center mb-12">
           <h2 className="font-headline text-3xl md:text-4xl font-bold text-primary">{t.summarizer.title}</h2>
           <p className="text-muted-foreground mt-2 max-w-2xl mx-auto">{t.summarizer.subtitle}</p>
         </div>
         <div className="grid md:grid-cols-2 gap-8">
-          <Card>
+          <Card className="bg-background">
             <CardHeader>
               <CardTitle className="font-headline">{t.summarizer.input.title}</CardTitle>
             </CardHeader>
@@ -95,7 +96,7 @@ export function Summarizer() {
               </Form>
             </CardContent>
           </Card>
-          <Card className="flex flex-col">
+          <Card className="flex flex-col bg-background">
             <CardHeader>
               <CardTitle className="font-headline">{t.summarizer.output.title}</CardTitle>
               <CardDescription>{t.summarizer.output.description}</CardDescription>
