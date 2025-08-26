@@ -11,7 +11,7 @@
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
-import { sendContactEmail, type ContactFormInput } from './send-contact-email';
+import { sendContactEmail } from './send-contact-email';
 
 
 const sendContactTool = ai.defineTool(
@@ -32,20 +32,11 @@ const sendContactTool = ai.defineTool(
     }
 );
 
-const MessageSchema = z.object({
-    role: z.enum(['user', 'assistant', 'tool']),
-    content: z.array(z.object({
-        text: z.string().optional(),
-        toolRequest: z.any().optional(),
-        toolResponse: z.any().optional(),
-    }))
-});
-
 const ProjectConsultantInputSchema = z.object({
   history: z.array(z.object({
       role: z.enum(['user', 'model']),
       parts: z.array(z.object({
-          text: z.string()
+          text: z.string().optional(),
       }))
   })).describe('The conversation history'),
   language: z.enum(['es', 'en']).describe('The language the assistant should respond in.')
@@ -69,7 +60,7 @@ const projectConsultantPrompt = ai.definePrompt({
 Your task is to follow this conversation flow:
 1.  **Language:** You MUST respond in the language specified: {{{language}}}. If the user switches language, you should switch too. Your very first message must be in the specified language.
 2.  **Initial Greeting:** If the conversation is new (the history is empty), greet the user in a friendly manner in their specified language and ask about their project idea.
-3.  **Information Gathering (Max 2-3 questions):** Ask key questions to understand the nature of the project (e.g., type of app/web, target audience, main feature). Be concise. Do not overwhelm the user.
+3.  **Information Gathering (Max 2-3 questions):** Ask key questions to understand the nature of the project (e.g., type of app/web, target audience, main feature). Be concise. Do not overwhelm the user. Remember the previous messages in the history to have a coherent conversation.
 4.  **Contact Proposal:** Once you have a general idea, stop asking questions and say something like: "Understood, this sounds like an interesting project. Would you like me to send this conversation to Jordan Talledo so he can analyze it and get in touch with you to discuss the details?".
 5.  **Tool Usage:**
     *   If the user says **YES** (or something similar), respond with: "Great! So he can contact you, could you please provide your full name, email, and, if you wish, your phone number?".
@@ -80,7 +71,6 @@ Your task is to follow this conversation flow:
 6.  **General Rules:**
     *   Always maintain a friendly, professional, and helpful tone.
     *   Do not invent information.
-    *   Remember the previous messages in the history to have a coherent conversation.
 `});
 
 const projectConsultantFlow = ai.defineFlow(
@@ -99,7 +89,7 @@ const projectConsultantFlow = ai.defineFlow(
         language: input.language
       }
     });
-
+    
     const toolRequests = response.toolRequests;
     if (toolRequests.length > 0) {
       const toolResponses = [];

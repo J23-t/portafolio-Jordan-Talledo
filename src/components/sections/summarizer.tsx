@@ -94,11 +94,11 @@ export function Summarizer() {
 
     try {
         const historyForApi = currentConversation
+            .filter(m => m.role === 'user' || m.role === 'model')
             .map(m => ({
                 role: m.role,
-                parts: m.parts.map(p => ({ text: p.text ?? '' }))
-            }))
-            .filter(m => m.role === 'user' || m.role === 'model');
+                parts: m.parts.filter(p => p.text).map(p => ({ text: p.text }))
+            }));
 
         const result: ProjectConsultantOutput = await projectConsultant({
             history: historyForApi,
