@@ -60,15 +60,10 @@ export async function projectConsultant(input: ProjectConsultantInput): Promise<
   return projectConsultantFlow(input);
 }
 
-const projectConsultantPrompt = ai.definePrompt({
-  name: 'projectConsultantPrompt',
-  tools: [sendContactTool],
-  input: {schema: ProjectConsultantInputSchema},
-  output: {schema: ProjectConsultantOutputSchema},
-  prompt: `Eres un asistente de IA experto y amigable que trabaja para Jordan Talledo, un desarrollador de software. Tu objetivo es ayudar a los clientes potenciales a definir los requisitos de su proyecto de forma eficiente y recopilar su información de contacto para que Jordan pueda hacer un seguimiento.
+const projectConsultantPrompt = `Eres un asistente de IA experto y amigable que trabaja para Jordan Talledo, un desarrollador de software. Tu objetivo es ayudar a los clientes potenciales a definir los requisitos de su proyecto de forma eficiente y recopilar su información de contacto para que Jordan pueda hacer un seguimiento.
 
 Tu tarea es seguir este flujo de conversación:
-1.  **Saludo Inicial:** Si la conversación es nueva, saluda al usuario amistosamente y pregunta sobre su idea de proyecto.
+1.  **Saludo Inicial:** Si la conversación es nueva (el historial está vacío), saluda al usuario amistosamente y pregunta sobre su idea de proyecto.
 2.  **Recopilación de Información (Máx. 2-3 preguntas):** Haz preguntas clave para entender la naturaleza del proyecto (ej: tipo de app/web, público objetivo, característica principal). Sé conciso. No abrumes al usuario.
 3.  **Propuesta de Contacto:** Una vez que tengas una idea general, detén las preguntas y di algo como: "Entendido, esto suena como un proyecto interesante. ¿Te gustaría que le envíe esta conversación a Jordan Talledo para que pueda analizarla y ponerse en contacto contigo para discutir los detalles?".
 4.  **Uso de la Herramienta:**
@@ -81,17 +76,7 @@ Tu tarea es seguir este flujo de conversación:
     *   Mantén siempre un tono amigable, profesional y servicial.
     *   Responde en el idioma en que el usuario te escribe.
     *   No inventes información.
-
-Historial de la conversación:
-{{#each history}}
-  {{#if (eq role 'user')}}
-    User: {{{parts.0.text}}}
-  {{else}}
-    Model: {{{parts.0.text}}}
-  {{/if}}
-{{/each}}
-`,
-});
+`;
 
 const projectConsultantFlow = ai.defineFlow(
   {
@@ -99,26 +84,26 @@ const projectConsultantFlow = ai.defineFlow(
     inputSchema: ProjectConsultantInputSchema,
     outputSchema: ProjectConsultantOutputSchema,
   },
-  async input => {
+  async (input) => {
     const response = await ai.generate({
-        prompt: projectConsultantPrompt.prompt,
-        history: input.history,
-        tools: [sendContactTool],
-        model: 'googleai/gemini-1.5-flash-latest'
+      prompt: projectConsultantPrompt,
+      history: input.history,
+      tools: [sendContactTool],
+      model: 'googleai/gemini-1.5-flash-latest',
     });
-    
+
     const toolRequests = response.toolRequests();
     if (toolRequests.length > 0) {
-        const toolResponses = [];
-        for (const toolRequest of toolRequests) {
-            const toolResponse = await toolRequest.execute();
-            toolResponses.push(toolResponse);
-        }
-        
-        const finalResponse = await response.continue(toolResponses);
-        return { reply: finalResponse.text() };
+      const toolResponses = [];
+      for (const toolRequest of toolRequests) {
+        const toolResponse = await toolRequest.execute();
+        toolResponses.push(toolResponse);
+      }
+
+      const finalResponse = await response.continue(toolResponses);
+      return { reply: finalResponse.text() };
     }
-    
+
     return { reply: response.text() };
   }
 );
