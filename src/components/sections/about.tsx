@@ -1,6 +1,7 @@
 "use client";
 
 import Image from 'next/image';
+import * as React from 'react';
 import { useLanguage } from '@/contexts/language-context';
 import { Button } from '@/components/ui/button';
 import { Download } from 'lucide-react';
@@ -21,9 +22,14 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import type { Skill } from '@/lib/types';
+import Autoplay from "embla-carousel-autoplay";
 
 export function About() {
   const { t, language } = useLanguage();
+  
+  const plugin = React.useRef(
+    Autoplay({ delay: 2000, stopOnInteraction: true })
+  );
 
   return (
     <section id="about" className="py-16 md:py-24 bg-secondary">
@@ -54,11 +60,14 @@ export function About() {
         <div className="mt-16">
             <h3 className="font-headline text-2xl md:text-3xl font-bold text-center mb-8">{t.about.skills.title}</h3>
             <Carousel
+              plugins={[plugin.current]}
               opts={{
                 align: "start",
                 loop: true,
               }}
               className="w-full max-w-sm sm:max-w-xl md:max-w-2xl lg:max-w-4xl xl:max-w-6xl mx-auto"
+              onMouseEnter={plugin.current.stop}
+              onMouseLeave={plugin.current.reset}
             >
               <CarouselContent>
                 {t.about.skills.list.map((skill: Skill) => (
