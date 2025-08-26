@@ -1,5 +1,6 @@
 "use client";
 
+import { use } from 'react';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -11,7 +12,9 @@ import { ChevronRight, ExternalLink } from 'lucide-react';
 import type { Project } from '@/lib/types';
 
 export default function ProjectDetailPage({ params }: { params: { slug: string } }) {
-  const { slug } = params;
+  // The `use` hook is the modern way to resolve the params promise in Client Components.
+  const resolvedParams = use(params);
+  const { slug } = resolvedParams;
   const project = projects.find((p) => p.slug === slug);
 
   const { t, language } = useLanguage();
