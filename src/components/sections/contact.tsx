@@ -12,7 +12,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import { Mail, Phone, Send, Loader2, CheckCircle, RefreshCcw } from 'lucide-react';
 import { useState } from 'react';
-import { sendContactEmail } from '@/ai/flows/send-contact-email';
+import { sendContactEmail, type ContactFormInput } from '@/ai/flows/send-contact-email';
 
 
 export function Contact() {
@@ -35,16 +35,23 @@ export function Contact() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true);
+    setIsSuccess(false);
+
     try {
       const result = await sendContactEmail(values);
-      console.log(result);
-      form.reset();
-      setIsSuccess(true);
+
+      if (result && result.success) {
+        setIsSuccess(true);
+        form.reset();
+      } else {
+        throw new Error(result.message || t.contact.form.error.description);
+      }
     } catch (error) {
       console.error(error);
+      const errorMessage = error instanceof Error ? error.message : t.contact.form.error.description;
       toast({
         title: t.contact.form.error.title,
-        description: t.contact.form.error.description,
+        description: errorMessage,
         variant: "destructive",
       });
     } finally {
@@ -108,7 +115,7 @@ export function Contact() {
                                             {t.contact.form.submit}
                                         </>
                                     )}
-                                </Button>
+                                 </Button>
                             </form>
                         </Form>
                     )}
