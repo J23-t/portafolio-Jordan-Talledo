@@ -9,8 +9,8 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Quote } from 'lucide-react';
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Quote, UserCircle } from 'lucide-react';
 import type { Testimonial } from '@/lib/types';
 
 export function Testimonials() {
@@ -44,10 +44,11 @@ export function Testimonials() {
                         <Quote className="w-12 h-12 text-primary/50 mb-4" />
                         <p className="text-lg md:text-xl italic mb-6">"{quote}"</p>
                         <div className="flex items-center gap-4">
-                          <Avatar>
-                            <AvatarImage src={testimonial.avatar} alt={testimonial.name} data-ai-hint="person photo" />
-                            <AvatarFallback>{testimonial.name.charAt(0)}</AvatarFallback>
-                          </Avatar>
+                           <Avatar className="h-12 w-12">
+                                <AvatarFallback className="bg-transparent">
+                                    <UserCircle className="h-full w-full text-primary" />
+                                </AvatarFallback>
+                            </Avatar>
                           <div>
                             <p className="font-semibold text-primary">{testimonial.name}</p>
                             <p className="text-sm text-muted-foreground">{company}</p>
